@@ -1,0 +1,27 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="All Tests" verbose="1">
+
+    <test name="Home page Test Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="test.java.com.demoqa.HomePageTest"/>
+        </classes>
+    </test>
+
+    <test name="Home page Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="test.java.com.demoqa.HomePageTest"/>
+        </classes>
+    </test>
+
+    <test name="Home page Safari">
+        <parameter name="browser" value="safari"/>
+        <classes>
+            <class name="test.java.com.demoqa.HomePageTest"/>
+        </classes>
+    </test>
+
+
+</suite>
