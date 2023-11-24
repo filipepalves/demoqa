@@ -113,6 +113,7 @@ public class ElementsTest extends TestUtilities {
 
         WebElement permanentaddresstextbox = driver.findElement(By.id("permanentAddress"));
         String permanentaddresstextboxText = permanentaddresstextbox.getAttribute("placeholder");
+        Assert.assertEquals(permanentaddresstextboxText, "");
 
         log.info("All the labels are verified.");
 
@@ -188,8 +189,45 @@ public class ElementsTest extends TestUtilities {
                 "Permananet Address :Test Permanent Address");
 
         log.info("All the values are typed and submit button is clicked. The output is verified and it's as expected.");
-
-        //Todo check
     }
+
+    @Test (dependsOnMethods = "textboxtest")
+    public void checkboxtest() {
+
+        WaitUtility waitUtility = new WaitUtility(driver);
+
+        log.info("Starting Checkbox Test");
+
+        // Click on Check Box button, click on each dropdown and verify all the elements
+
+        By checkboxclick = By.id("item-1");
+        waitUtility.waitAndClick(checkboxclick);
+
+        WebElement dropdownhome = driver.findElement(By.cssSelector("button[title='Toggle']"));
+        dropdownhome.click();
+
+        WebElement dropdowndesktop = driver.findElement(By.xpath("(//button[@title='Toggle'])[2]"));
+        dropdowndesktop.click();
+
+        WebElement dropdowndocuments = driver.findElement(By.xpath("(//button[@title='Toggle'])[3]"));
+        dropdowndocuments.click();
+
+        WebElement dropdownworkspace = driver.findElement(By.xpath("(//button[@title='Toggle'])[4]"));
+        dropdownworkspace.click();
+
+        WebElement dropdownoffice = driver.findElement(By.xpath("(//button[@title='Toggle'])[5]"));
+        dropdownoffice.click();
+
+        WebElement dropdowndownloads = driver.findElement(By.xpath("(//button[@title='Toggle'])[6]"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dropdowndownloads);
+        dropdowndownloads.click();
+
+
+
+
+
+
+    }
+
 }
 
