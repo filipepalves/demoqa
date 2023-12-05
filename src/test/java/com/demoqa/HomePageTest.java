@@ -2,6 +2,7 @@ package test.java.com.demoqa;
 
 import main.java.TestUtilities;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,6 +13,7 @@ public class HomePageTest extends TestUtilities {
     public void homepagetest() {
 
         WaitUtility waitUtility = new WaitUtility(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
 
         log.info("Starting Home page Test");
 
@@ -73,6 +75,8 @@ public class HomePageTest extends TestUtilities {
         waitUtility.waitAndClick(interactionsclick);
 
         driver.navigate().back();
+
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         waitUtility.waitAndClick(bookStoreclick);
 
