@@ -9,14 +9,15 @@ import org.testng.annotations.Test;
 
 public class ElementsTest extends TestUtilities {
 
+
+
     @Test
     public void elementstest() {
 
         WaitUtility waitUtility = new WaitUtility(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
 
         log.info("Starting Elements Test");
-
-        // Open the Page
 
         String url = "https://demoqa.com/";
         driver.get(url);
@@ -183,10 +184,11 @@ public class ElementsTest extends TestUtilities {
         js.executeScript("arguments[0].click();", submitbutton);
 
         output = driver.findElement(By.id("output")).getText();
-        Assert.assertEquals(output, "Name:Test Name\n" +
-                "Email:email@example.com\n" +
-                "Current Address :Test Current Address\n" +
-                "Permananet Address :Test Permanent Address");
+        Assert.assertEquals(output, """
+                Name:Test Name
+                Email:email@example.com
+                Current Address :Test Current Address
+                Permananet Address :Test Permanent Address""");
 
         log.info("All the values are typed and submit button is clicked. The output is verified and it's as expected.");
     }
@@ -203,8 +205,118 @@ public class ElementsTest extends TestUtilities {
         By checkboxclick = By.id("item-1");
         waitUtility.waitAndClick(checkboxclick);
 
-        WebElement dropdownhome = driver.findElement(By.cssSelector("button[title='Toggle']"));
-        dropdownhome.click();
+        WebElement expandAllButton = driver.findElement(By.cssSelector(".rct-option-expand-all"));
+        expandAllButton.click();
+
+        // Find and click specific checkboxes by their IDs
+
+        WebElement notesCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Notes')]"));
+        notesCheckbox.click();
+
+        String result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals(result, "You have selected :\n" +
+                "notes");
+
+        WebElement commandsCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Commands')]"));
+        commandsCheckbox.click();
+
+        result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals(result, """
+                You have selected :
+                desktop
+                notes
+                commands""");
+
+        WebElement desktopCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Desktop')]"));
+        desktopCheckbox.click();
+
+        WebElement reactCheckbox = driver.findElement(By.xpath("//span[contains(text(),'React')]"));
+        reactCheckbox.click();
+
+        WebElement angularCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Angular')]"));
+        angularCheckbox.click();
+
+        WebElement veuCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Veu')]"));
+        veuCheckbox.click();
+
+        result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals(result, """
+                You have selected :
+                workspace
+                react
+                angular
+                veu""");
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+
+        WebElement workspaceCheckbox = driver.findElement(By.xpath("//span[contains(text(),'WorkSpace')]"));
+        workspaceCheckbox.click();
+
+        WebElement privateCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Private')]"));
+        privateCheckbox.click();
+
+        WebElement publicCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Public')]"));
+        publicCheckbox.click();
+
+        WebElement classifiedCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Classified')]"));
+        classifiedCheckbox.click();
+
+        WebElement generalCheckbox = driver.findElement(By.xpath("//span[contains(text(),'General')]"));
+        generalCheckbox.click();
+
+        result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals(result, """
+                You have selected :
+                office
+                public
+                private
+                classified
+                general""");
+
+        WebElement officeCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Office')]"));
+        officeCheckbox.click();
+
+        WebElement wordfileCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Word File.doc')]"));
+        wordfileCheckbox.click();
+
+        WebElement excelfileCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Excel File.doc')]"));
+        excelfileCheckbox.click();
+
+        result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals(result, """
+                You have selected :
+                downloads
+                wordFile
+                excelFile""");
+
+        WebElement homeCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Home')]"));
+        homeCheckbox.click();
+
+        result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals(result, """
+                You have selected :
+                home
+                desktop
+                notes
+                commands
+                documents
+                workspace
+                react
+                angular
+                veu
+                office
+                public
+                private
+                classified
+                general
+                downloads
+                wordFile
+                excelFile""");
+
+        log.info("All the checkboxes are working as expected and the feedback is displayed correctly.");
+
+        // Click on some dropdown buttons
 
         WebElement dropdowndesktop = driver.findElement(By.xpath("(//button[@title='Toggle'])[2]"));
         dropdowndesktop.click();
@@ -215,13 +327,59 @@ public class ElementsTest extends TestUtilities {
         WebElement dropdownworkspace = driver.findElement(By.xpath("(//button[@title='Toggle'])[4]"));
         dropdownworkspace.click();
 
-        WebElement dropdownoffice = driver.findElement(By.xpath("(//button[@title='Toggle'])[5]"));
-        dropdownoffice.click();
+    }
 
-        WebElement dropdowndownloads = driver.findElement(By.xpath("(//button[@title='Toggle'])[6]"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dropdowndownloads);
-        dropdowndownloads.click();
+    @Test (dependsOnMethods = "checkboxtest")
+    public void radiobuttontest() {
 
+        WaitUtility waitUtility = new WaitUtility(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        log.info("Starting Radio Button Test");
+
+        // Click on Radio button and verify all the elements
+
+        WebElement radiobuttonbutton = driver.findElement(By.id("item-2"));
+        radiobuttonbutton.click();
+
+        String title = driver.findElement(By.cssSelector(".mb-3")).getText();
+        Assert.assertEquals(title, "Do you like the site?");
+
+        String yes = driver.findElement(By.cssSelector("label[for='yesRadio']")).getText();
+        Assert.assertEquals(yes, "Yes");
+
+        String impressive = driver.findElement(By.cssSelector("label[for='impressiveRadio']")).getText();
+        Assert.assertEquals(impressive, "Impressive");
+
+        String no = driver.findElement(By.cssSelector("label[for='noRadio']")).getText();
+        Assert.assertEquals(no, "No");
+
+        // Click on each radio button and verify the feedback
+
+        WebElement yesRadio = driver.findElement(By.cssSelector("label[for='yesRadio']"));
+        yesRadio.click();
+
+        String feedback = driver.findElement(By.cssSelector(".mt-3")).getText();
+        Assert.assertEquals(feedback, "You have selected Yes");
+
+        WebElement impressiveRadio = driver.findElement(By.cssSelector("label[for='impressiveRadio']"));
+        impressiveRadio.click();
+
+        feedback = driver.findElement(By.cssSelector(".mt-3")).getText();
+        Assert.assertEquals(feedback, "You have selected Impressive");
+
+        WebElement noRadio = driver.findElement(By.id("noRadio"));
+
+        boolean isClickable = noRadio.isEnabled();
+
+        if (!isClickable) {
+            log.info("The element is not clickable.");
+        } else {
+            log.info("The element is clickable.");
+        }
+
+        feedback = driver.findElement(By.cssSelector(".mt-3")).getText();
+        Assert.assertEquals(feedback, "You have selected Impressive");
 
 
 

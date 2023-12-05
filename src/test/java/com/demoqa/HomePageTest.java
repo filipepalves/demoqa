@@ -15,8 +15,6 @@ public class HomePageTest extends TestUtilities {
 
         log.info("Starting Home page Test");
 
-        // Open the Page
-
         String url = "https://demoqa.com/";
         driver.get(url);
 
