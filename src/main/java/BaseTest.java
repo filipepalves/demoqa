@@ -13,7 +13,7 @@ public class BaseTest {
 
     protected WebDriver driver;
 
-    protected Logger log;
+    protected static Logger log;
 
     @Parameters({"browser"})
     @BeforeTest(alwaysRun = true)

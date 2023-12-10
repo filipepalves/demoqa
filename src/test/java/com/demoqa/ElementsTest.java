@@ -4,8 +4,11 @@ import main.java.TestUtilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class ElementsTest extends TestUtilities {
 
@@ -381,11 +384,152 @@ public class ElementsTest extends TestUtilities {
         feedback = driver.findElement(By.cssSelector(".mt-3")).getText();
         Assert.assertEquals(feedback, "You have selected Impressive");
 
+    }
 
+    @Test (dependsOnMethods = "radiobuttontest")
+    public void webtables() throws InterruptedException {
+
+        WaitUtility waitUtility = new WaitUtility(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        log.info("Starting Web Tables Test");
+
+        WebElement webtablebutton = driver.findElement(By.id("item-3"));
+        webtablebutton.click();
+
+        WebElement addbutton = driver.findElement(By.id("addNewRecordButton"));
+        addbutton.isDisplayed();
+
+        WebElement textbox = driver.findElement(By.id("searchBox"));
+        String searchboxText = textbox.getAttribute("placeholder");
+        Assert.assertEquals(searchboxText, "Type to search");
+
+        WebElement firstname = driver.findElement(By.xpath("//div[@class='rt-resizable-header-content' and text()='First Name']"));
+        String firstnameText = firstname.getText();
+        Assert.assertEquals(firstnameText, "First Name");
+
+        WebElement lastname = driver.findElement(By.xpath("//div[@class='rt-resizable-header-content' and text()='Last Name']"));
+        String lastnameText = lastname.getText();
+        Assert.assertEquals(lastnameText, "Last Name");
+
+        WebElement age = driver.findElement(By.xpath("//div[@class='rt-resizable-header-content' and text()='Age']"));
+        String ageText = age.getText();
+        Assert.assertEquals(ageText, "Age");
+
+        WebElement email = driver.findElement(By.xpath("//div[@class='rt-resizable-header-content' and text()='Email']"));
+        String emailText = email.getText();
+        Assert.assertEquals(emailText, "Email");
+
+        WebElement salary = driver.findElement(By.xpath("//div[@class='rt-resizable-header-content' and text()='Salary']"));
+        String salaryText = salary.getText();
+        Assert.assertEquals(salaryText, "Salary");
+
+        WebElement department = driver.findElement(By.xpath("//div[@class='rt-resizable-header-content' and text()='Department']"));
+        String departmentText = department.getText();
+        Assert.assertEquals(departmentText, "Department");
+
+        WebElement action = driver.findElement(By.xpath("//div[@class='rt-resizable-header-content' and text()='Action']"));
+        String actionText = action.getText();
+        Assert.assertEquals(actionText, "Action");
+
+        log.info("All the labels are correctly displayed");
+
+        // Verify all the headers and order
+
+        WebElement table = driver.findElement(By.xpath("//div[@class='rt-table']"));
+        List<WebElement> tableRows = table.findElements(By.xpath(".//div[@role='row' and contains(@class, 'rt-tr')]"));
+        WebElement tableHeader = driver.findElement(By.xpath("//div[@class='rt-thead -header']"));
+        List<WebElement> headers = tableHeader.findElements(By.xpath(".//div[@role='columnheader' and contains(@class, 'rt-th')]"));
+        List<String> headerTexts = headers.stream().map(WebElement::getText).toList();
+
+        log.info("Table Headers: " + headerTexts);
+
+        TableVerifier.verifyColumnSorting(headers.get(0), tableRows, 1);
+
+        TableVerifier.verifyColumnSorting(headers.get(1), tableRows, 2);
+
+        TableVerifier.verifyColumnSorting(headers.get(3), tableRows, 4);
+
+        TableVerifier.verifyColumnSorting(headers.get(4), tableRows, 5);
+
+        log.info("All the order buttons are working correctly");
+
+        WebElement previousbutton = driver.findElement(By.cssSelector(".-previous"));
+        String previous = previousbutton.getText();
+        Assert.assertEquals(previous, "Previous");
+
+        WebElement nextbutton = driver.findElement(By.cssSelector(".-next"));
+        String next = nextbutton.getText();
+        Assert.assertEquals(next, "Next");
+
+
+        // Verify the dropdown option to select the number of rows to display
+
+        WebElement dropdownElement = driver.findElement(By.cssSelector("span.select-wrap.-pageSizeOptions > select[aria-label='rows per page']"));
+
+        Select dropdown = new Select(dropdownElement);
+
+        boolean isMultiple = dropdown.isMultiple();
+        log.info("Is the dropdown allowing multiple selection? " + isMultiple);
+
+        List<WebElement> options = dropdown.getOptions();
+
+       log.info("Available options in the dropdown: ");
+        for (WebElement option : options) {
+            log.info(option.getText());
+        }
+
+        dropdown.selectByVisibleText("5 rows");
+
+        WebElement selectedOption = dropdown.getFirstSelectedOption();
+        table = driver.findElement(By.xpath("//div[@class='rt-tbody']"));
+        tableRows = table.findElements(By.xpath(".//div[@role='row' and contains(@class, 'rt-tr')]"));
+        int rowsnumber = tableRows.size();
+        Assert.assertTrue(rowsnumber == 5);
+        log.info("The selected option is: " + selectedOption.getText() + " And the table has: " + rowsnumber + " rows");
+
+        // Add some rows to the table
+
+        addbutton.click();
+
+        WebElement firstNameInput = driver.findElement(By.id("firstName"));
+        WebElement lastNameInput = driver.findElement(By.id("lastName"));
+        WebElement emailInput = driver.findElement(By.id("userEmail"));
+        WebElement ageInput = driver.findElement(By.id("age"));
+        WebElement salaryInput = driver.findElement(By.id("salary"));
+        WebElement departmentInput = driver.findElement(By.id("department"));
+        WebElement submitButton = driver.findElement(By.id("submit"));
+
+        WebElement  closeButton = driver.findElement(By.cssSelector(".close"));
+        closeButton.click();
+
+        for (int i = 0; i < 90; i++) {
+
+            addbutton.click();
+
+            firstNameInput = driver.findElement(By.id("firstName"));
+            lastNameInput = driver.findElement(By.id("lastName"));
+            emailInput = driver.findElement(By.id("userEmail"));
+            ageInput = driver.findElement(By.id("age"));
+            salaryInput = driver.findElement(By.id("salary"));
+            departmentInput = driver.findElement(By.id("department"));
+            submitButton = driver.findElement(By.id("submit"));
+
+            firstNameInput.sendKeys("Filipe" + i);
+            lastNameInput.sendKeys("Alves" + i);
+            emailInput.sendKeys("filipepretoalves" + i + "@gmail.com");
+            ageInput.sendKeys("36");
+            salaryInput.sendKeys("30000");
+            departmentInput.sendKeys("QA Engineer");
+            submitButton.click();
+
+        }
+
+        log.info("Were added 90 rows successfully.");
 
 
 
     }
 
-}
+    }
 
