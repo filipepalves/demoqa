@@ -4,6 +4,7 @@ import main.java.TestUtilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ElementsTest extends TestUtilities {
-
 
 
     @Test
@@ -76,7 +76,7 @@ public class ElementsTest extends TestUtilities {
 
     }
 
-    @Test (dependsOnMethods = "elementstest")
+    @Test(dependsOnMethods = "elementstest")
     public void textboxtest() {
 
         WaitUtility waitUtility = new WaitUtility(driver);
@@ -181,7 +181,7 @@ public class ElementsTest extends TestUtilities {
         js.executeScript("arguments[0].click();", submitbutton);
 
         String output = driver.findElement(By.id("output")).getText();
-        Assert.assertEquals( output, "");
+        Assert.assertEquals(output, "");
 
         emailtextbox.clear();
         emailtextbox.sendKeys("email@example.com");
@@ -197,7 +197,7 @@ public class ElementsTest extends TestUtilities {
         log.info("All the values are typed and submit button is clicked. The output is verified and it's as expected.");
     }
 
-    @Test (dependsOnMethods = "textboxtest")
+    @Test(dependsOnMethods = "textboxtest")
     public void checkboxtest() {
 
         WaitUtility waitUtility = new WaitUtility(driver);
@@ -207,6 +207,8 @@ public class ElementsTest extends TestUtilities {
         // Click on Check Box button, click on each dropdown and verify all the elements
 
         By checkboxclick = By.id("item-1");
+        String checkboxclickText = driver.findElement(checkboxclick).getText();
+        Assert.assertEquals(checkboxclickText, "Check Box");
         waitUtility.waitAndClick(checkboxclick);
 
         WebElement expandAllButton = driver.findElement(By.cssSelector(".rct-option-expand-all"));
@@ -333,7 +335,7 @@ public class ElementsTest extends TestUtilities {
 
     }
 
-    @Test (dependsOnMethods = "checkboxtest")
+    @Test(dependsOnMethods = "checkboxtest")
     public void radiobuttontest() {
 
         WaitUtility waitUtility = new WaitUtility(driver);
@@ -344,6 +346,8 @@ public class ElementsTest extends TestUtilities {
         // Click on Radio button and verify all the elements
 
         WebElement radiobuttonbutton = driver.findElement(By.id("item-2"));
+        String radiobuttonbuttonText = radiobuttonbutton.getText();
+        Assert.assertEquals(radiobuttonbuttonText, "Radio Button");
         radiobuttonbutton.click();
 
         String title = driver.findElement(By.cssSelector(".mb-3")).getText();
@@ -387,7 +391,7 @@ public class ElementsTest extends TestUtilities {
 
     }
 
-    @Test (dependsOnMethods = "radiobuttontest")
+    @Test(dependsOnMethods = "radiobuttontest")
     public void webtables() throws InterruptedException {
 
         WaitUtility waitUtility = new WaitUtility(driver);
@@ -396,6 +400,8 @@ public class ElementsTest extends TestUtilities {
         log.info("Starting Web Tables Test");
 
         WebElement webtablebutton = driver.findElement(By.id("item-3"));
+        String webtablebuttonText = webtablebutton.getText();
+        Assert.assertEquals(webtablebuttonText, "Web Tables");
         webtablebutton.click();
 
         WebElement addbutton = driver.findElement(By.id("addNewRecordButton"));
@@ -463,6 +469,37 @@ public class ElementsTest extends TestUtilities {
         String next = nextbutton.getText();
         Assert.assertEquals(next, "Next");
 
+        // Verify the edit one row
+
+        WebElement editButton = driver.findElement(By.id("edit-record-1"));
+        editButton.click();
+
+        WebElement firstNameInput = driver.findElement(By.id("firstName"));
+        WebElement lastNameInput = driver.findElement(By.id("lastName"));
+        WebElement emailInput = driver.findElement(By.id("userEmail"));
+        WebElement ageInput = driver.findElement(By.id("age"));
+        WebElement salaryInput = driver.findElement(By.id("salary"));
+        WebElement departmentInput = driver.findElement(By.id("department"));
+        WebElement submitButton = driver.findElement(By.id("submit"));
+
+        firstNameInput.clear();
+        firstNameInput.sendKeys("John");
+        lastNameInput.clear();
+        lastNameInput.sendKeys("Doe");
+        emailInput.clear();
+        emailInput.sendKeys("L5kzA@example.com");
+        ageInput.clear();
+        ageInput.sendKeys("25");
+        salaryInput.clear();
+        salaryInput.sendKeys("5000");
+        departmentInput.clear();
+        departmentInput.sendKeys("QA");
+        submitButton.click();
+
+        String rowtable = driver.findElement(By.xpath("(//div[@role='rowgroup'])[2]")).getText();
+        Assert.assertEquals(rowtable, "John\nDoe\n25\nL5kzA@example.com\n5000\nQA");
+
+        log.info("Edit button works correctly");
 
         // Verify the dropdown option to select the number of rows to display
 
@@ -487,23 +524,10 @@ public class ElementsTest extends TestUtilities {
         table = driver.findElement(By.xpath("//div[@class='rt-tbody']"));
         tableRows = table.findElements(By.xpath(".//div[@role='row' and contains(@class, 'rt-tr')]"));
         int rowsnumber = tableRows.size();
-        Assert.assertTrue(rowsnumber == 5);
+        Assert.assertEquals(rowsnumber, 5);
         log.info("The selected option is: " + selectedOption.getText() + " And the table has: " + rowsnumber + " rows");
 
         // Add some rows to the table
-
-        addbutton.click();
-
-        WebElement firstNameInput = driver.findElement(By.id("firstName"));
-        WebElement lastNameInput = driver.findElement(By.id("lastName"));
-        WebElement emailInput = driver.findElement(By.id("userEmail"));
-        WebElement ageInput = driver.findElement(By.id("age"));
-        WebElement salaryInput = driver.findElement(By.id("salary"));
-        WebElement departmentInput = driver.findElement(By.id("department"));
-        WebElement submitButton = driver.findElement(By.id("submit"));
-
-        WebElement  closeButton = driver.findElement(By.cssSelector(".close"));
-        closeButton.click();
 
         for (int i = 1; i <= 90; i++) {
 
@@ -541,35 +565,97 @@ public class ElementsTest extends TestUtilities {
             }
         }
         rowsnumber = nonEmptyRows.size();
-        Assert.assertTrue(rowsnumber == 93, "The table should have 93 rows, but it has: " + rowsnumber + " rows");
+        Assert.assertEquals(rowsnumber, 93, "The table should have 93 rows, but it has: " + rowsnumber + " rows");
 
         log.info("The table has: " + rowsnumber + " rows. Were added 90 rows successfully.");
+
+        //Verify the delete button
+
+        String rowtablePre = driver.findElement(By.xpath("(//div[@role='rowgroup'])[1]")).getText();
+
+        WebElement deleteButton = driver.findElement(By.id("delete-record-3"));
+        deleteButton.click();
+
+        String rowtablePost = driver.findElement(By.xpath("(//div[@role='rowgroup'])[1]")).getText();
+
+        Assert.assertNotEquals(rowtablePre, rowtablePost);
+
+        log.info("Delete button is working correctly. The 1st row was deleted.");
+
+        // Verify the pagination
 
         dropdown.selectByVisibleText("5 rows");
 
         String pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
-        Assert.assertTrue(pagination.equals("1"));
+        Assert.assertEquals(pagination, "1");
 
         nextbutton.click();
 
         pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
-        Assert.assertTrue(pagination.equals("2"));
+        Assert.assertEquals(pagination, "2");
 
         nextbutton.click();
 
         pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
-        Assert.assertTrue(pagination.equals("3"));
+        Assert.assertEquals(pagination, "3");
 
         previousbutton.click();
 
         pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
-        Assert.assertTrue(pagination.equals("2"));
+        Assert.assertEquals(pagination, "2");
 
         log.info("The pagination works as expected after clicking next and previous buttons.");
 
+    }
 
+    @Test(dependsOnMethods = "webtables")
+    public void buttons() throws InterruptedException {
+
+        log.info("Starting Buttons Test");
+
+        WaitUtility waitUtility = new WaitUtility(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Actions actions = new Actions(driver);
+
+        // Click on Buttons button and verify all the elements
+
+        WebElement buttons = driver.findElement(By.id("item-4"));
+        String buttonsText = buttons.getText();
+        Assert.assertEquals(buttonsText, "Buttons");
+        buttons.click();
+
+        WebElement doubleclick = driver.findElement(By.id("doubleClickBtn"));
+        String doubleclickText = doubleclick.getText();
+        Assert.assertEquals(doubleclickText, "Double Click Me");
+
+
+        WebElement rightclick = driver.findElement(By.id("rightClickBtn"));
+        String rightclickText = rightclick.getText();
+        Assert.assertEquals(rightclickText, "Right Click Me");
+
+        WebElement click = driver.findElement(By.xpath("//button[@class='btn btn-primary' and text()='Click Me']\n"));
+        String clickText = click.getText();
+        Assert.assertEquals(clickText, "Click Me");
+
+        log.info("All the buttons are displayed.");
+
+        // Click on each button and verify the feedback
+
+        actions.doubleClick(doubleclick).perform();
+        String doubleclickfeedback = driver.findElement(By.id("doubleClickMessage")).getText();
+        Assert.assertEquals(doubleclickfeedback, "You have done a double click");
+
+        actions.contextClick(rightclick).perform();
+        String rightclickfeedback = driver.findElement(By.id("rightClickMessage")).getText();
+        Assert.assertEquals(rightclickfeedback, "You have done a right click");
+
+        click.click();
+        String clickfeedback = driver.findElement(By.id("dynamicClickMessage")).getText();
+        Assert.assertEquals(clickfeedback, "You have done a dynamic click");
+
+        log.info("All the buttons are working correctly.");
 
     }
 
-    }
+}
 
