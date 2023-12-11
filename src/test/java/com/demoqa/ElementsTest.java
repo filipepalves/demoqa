@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ElementsTest extends TestUtilities {
@@ -474,11 +475,12 @@ public class ElementsTest extends TestUtilities {
 
         List<WebElement> options = dropdown.getOptions();
 
-       log.info("Available options in the dropdown: ");
+        StringBuilder optionsText = new StringBuilder("Available options in the dropdown: ");
         for (WebElement option : options) {
-            log.info(option.getText());
+            optionsText.append(option.getText()).append(", ");
         }
 
+        log.info(optionsText.toString());
         dropdown.selectByVisibleText("5 rows");
 
         WebElement selectedOption = dropdown.getFirstSelectedOption();
@@ -503,7 +505,7 @@ public class ElementsTest extends TestUtilities {
         WebElement  closeButton = driver.findElement(By.cssSelector(".close"));
         closeButton.click();
 
-        for (int i = 0; i < 90; i++) {
+        for (int i = 1; i <= 90; i++) {
 
             addbutton.click();
 
@@ -525,7 +527,45 @@ public class ElementsTest extends TestUtilities {
 
         }
 
-        log.info("Were added 90 rows successfully.");
+        // Verify the number of rows in the table
+
+        dropdown.selectByVisibleText("100 rows");
+
+        table = driver.findElement(By.xpath("//div[@class='rt-tbody']"));
+        tableRows = table.findElements(By.xpath(".//div[@role='row' and contains(@class, 'rt-tr')]"));
+        List<WebElement> nonEmptyRows = new ArrayList<>();
+        for (WebElement row : tableRows) {
+            String rowText = row.getText().trim();
+            if (!rowText.isEmpty()) {
+                nonEmptyRows.add(row);
+            }
+        }
+        rowsnumber = nonEmptyRows.size();
+        Assert.assertTrue(rowsnumber == 93, "The table should have 93 rows, but it has: " + rowsnumber + " rows");
+
+        log.info("The table has: " + rowsnumber + " rows. Were added 90 rows successfully.");
+
+        dropdown.selectByVisibleText("5 rows");
+
+        String pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
+        Assert.assertTrue(pagination.equals("1"));
+
+        nextbutton.click();
+
+        pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
+        Assert.assertTrue(pagination.equals("2"));
+
+        nextbutton.click();
+
+        pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
+        Assert.assertTrue(pagination.equals("3"));
+
+        previousbutton.click();
+
+        pagination = driver.findElement(By.cssSelector("[aria-label='jump to page']")).getAttribute("value");
+        Assert.assertTrue(pagination.equals("2"));
+
+        log.info("The pagination works as expected after clicking next and previous buttons.");
 
 
 
