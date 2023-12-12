@@ -19,28 +19,28 @@ This repository showcases comprehensive automation tests for the DemoQA website,
 
 ## Project Structure
 
-`src
+```src
 ├── main
-│   ├── java
-│   │   BaseTest.java
-|   |   Browser.java
-|   |   TestUtilities
-|   |
-│   └── resources
-│       ├── chromedriver (WebDriver executable)
-│       ├── geckodriver (WebDriver executable)
-│       ├── log4j2.xml (Log4j2 configuration)
-│       └── testng.xml (TestNG suite configuration)
+│ ├── java
+│ │ ├── BaseTest.java
+│ │ ├── Browser.java
+│ │ └── TestUtilities.java
+│ └── resources
+│ ├── chromedriver # WebDriver executable
+│ ├── geckodriver # WebDriver executable
+│ ├── log4j2.xml # Log4j2 configuration
+│ └── testng.xml # TestNG suite configuration
 ├── test
-|   ├── java
-│   │       └── demoqa
-│   │           ├── HomePageTest.java
-│   │           └── ElementsTest.java
-│   └── TestSuites
-│       ├── AllTests.xml
-└── pom.xml (Maven project configuration)`
+│ ├── java
+│ │ └── demoqa
+│ │ ├── HomePageTest.java
+│ │ └── ElementsTest.java
+│ └── TestSuites
+│ └── AllTests.xml
+└── pom.xml # Maven project configuration
+```
 
-This layout maintains simplicity by categorizing directories into main functional areas. It includes minimal details to provide a quick overview of the project structure..
+This layout maintains simplicity by categorizing directories into main functional areas. It includes minimal details to provide a quick overview of the project structure.
 
 ## Setup
 
