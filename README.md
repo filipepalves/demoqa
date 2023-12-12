@@ -19,44 +19,28 @@ This repository showcases comprehensive automation tests for the DemoQA website,
 
 ## Project Structure
 
-│   README.md
-│   pom.xml
-│
-└───src
-    └───main
-    │   └───java
-    │       └───com
-    │           └───yourcompany
-    │               └───automation
-    │                   ├───pages
-    │                   │   ├───HomePage.java
-    │                   │   ├───LoginPage.java
-    │                   │   └───... (other page objects)
-    │                   │
-    │                   ├───tests
-    │                   │   ├───HomePageTest.java
-    │                   │   ├───LoginTest.java
-    │                   │   └───... (other test classes)
-    │                   │
-    │                   ├───utilities
-    │                   │   ├───DriverFactory.java
-    │                   │   ├───LoggerUtil.java
-    │                   │   └───... (other utility classes)
-    │                   │
-    │                   └───config
-    │                       ├───ConfigReader.java
-    │                       └───... (other configuration-related classes)
-    │
-    └───resources
-        │   log4j2.xml
-        │   testng.xml
-        │   ...
-        │
-        └───drivers
-            ├───chromedriver.exe
-            └───geckodriver.exe
+`src
+├── main
+│   ├── java
+│   │   BaseTest.java
+|   |   Browser.java
+|   |   TestUtilities
+|   |
+│   └── resources
+│       ├── chromedriver (WebDriver executable)
+│       ├── geckodriver (WebDriver executable)
+│       ├── log4j2.xml (Log4j2 configuration)
+│       └── testng.xml (TestNG suite configuration)
+├── test
+|   ├── java
+│   │       └── demoqa
+│   │           ├── HomePageTest.java
+│   │           └── ElementsTest.java
+│   └── TestSuites
+│       ├── AllTests.xml
+└── pom.xml (Maven project configuration)`
 
-
+This layout maintains simplicity by categorizing directories into main functional areas. It includes minimal details to provide a quick overview of the project structure..
 
 ## Setup
 
