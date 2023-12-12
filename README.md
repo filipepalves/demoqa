@@ -1,4 +1,5 @@
-Automated Test Suite for https://demoqa.com/
+# Automated Test Suite for https://demoqa.com/
+
 Welcome to my portfolio project showcasing an automated test suite developed using Selenium WebDriver, Java, and TestNG to thoroughly test interactions on the page https://demoqa.com/.
 
 Overview
