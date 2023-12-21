@@ -1,6 +1,6 @@
 package test.java.com.demoqa;
 
-import main.java.TestUtilities;
+import main.java.base.TestUtilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;

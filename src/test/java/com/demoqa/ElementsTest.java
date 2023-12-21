@@ -1,10 +1,11 @@
 package test.java.com.demoqa;
 
-import main.java.TestUtilities;
+import main.java.base.TabSwitcher;
+import main.java.base.TableVerifier;
+import main.java.base.TestUtilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -17,9 +18,6 @@ public class ElementsTest extends TestUtilities {
 
     @Test
     public void elementstest() {
-
-        WaitUtility waitUtility = new WaitUtility(driver);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
 
         log.info("Starting Elements Test");
 
@@ -78,9 +76,6 @@ public class ElementsTest extends TestUtilities {
 
     @Test(dependsOnMethods = "elementstest")
     public void textboxtest() {
-
-        WaitUtility waitUtility = new WaitUtility(driver);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
 
         log.info("Starting Textbox Test");
 
@@ -200,8 +195,6 @@ public class ElementsTest extends TestUtilities {
     @Test(dependsOnMethods = "textboxtest")
     public void checkboxtest() {
 
-        WaitUtility waitUtility = new WaitUtility(driver);
-
         log.info("Starting Checkbox Test");
 
         // Click on Check Box button, click on each dropdown and verify all the elements
@@ -253,7 +246,6 @@ public class ElementsTest extends TestUtilities {
                 angular
                 veu""");
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         WebElement workspaceCheckbox = driver.findElement(By.xpath("//span[contains(text(),'WorkSpace')]"));
@@ -338,9 +330,6 @@ public class ElementsTest extends TestUtilities {
     @Test(dependsOnMethods = "checkboxtest")
     public void radiobuttontest() {
 
-        WaitUtility waitUtility = new WaitUtility(driver);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
         log.info("Starting Radio Button Test");
 
         // Click on Radio button and verify all the elements
@@ -364,8 +353,8 @@ public class ElementsTest extends TestUtilities {
 
         // Click on each radio button and verify the feedback
 
-        WebElement yesRadio = driver.findElement(By.cssSelector("label[for='yesRadio']"));
-        yesRadio.click();
+        By yesRadio = By.cssSelector("label[for='yesRadio']");
+        waitUtility.waitAndClick(yesRadio);
 
         String feedback = driver.findElement(By.cssSelector(".mt-3")).getText();
         Assert.assertEquals(feedback, "You have selected Yes");
@@ -613,10 +602,6 @@ public class ElementsTest extends TestUtilities {
 
         log.info("Starting Buttons Test");
 
-        WaitUtility waitUtility = new WaitUtility(driver);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        Actions actions = new Actions(driver);
-
         // Click on Buttons button and verify all the elements
 
         WebElement buttons = driver.findElement(By.id("item-4"));
@@ -656,6 +641,129 @@ public class ElementsTest extends TestUtilities {
         log.info("All the buttons are working correctly.");
 
     }
+
+    @Test(dependsOnMethods = "buttons")
+    public void linkstest() throws InterruptedException {
+
+        String firstWindowHandle = driver.getWindowHandle();
+        tabSwitcher = new TabSwitcher(driver);
+
+
+        log.info("Starting Links Test");
+
+        // Click on Buttons button and verify all the elements
+
+        js.executeScript("window.scrollBy(0, 300)");
+        WebElement links = driver.findElement(By.id("item-5"));
+        String linksText = links.getText();
+        Assert.assertEquals(linksText, "Links");
+        links.click();
+
+        WebElement simplelink = driver.findElement(By.id("simpleLink"));
+        String simplelinkText = simplelink.getText();
+        Assert.assertEquals(simplelinkText, "Home");
+
+        WebElement dynamiclink = driver.findElement(By.id("dynamicLink"));
+        String dynamiclinkText = dynamiclink.getText();
+        Assert.assertTrue(dynamiclinkText.contains("Home"));
+
+        WebElement createdlink = driver.findElement(By.id("created"));
+        String createdlinkText = createdlink.getText();
+        Assert.assertEquals(createdlinkText, "Created");
+
+        WebElement nocontent = driver.findElement(By.id("no-content"));
+        String nocontentText = nocontent.getText();
+        Assert.assertEquals(nocontentText, "No Content");
+
+        WebElement moved = driver.findElement(By.id("moved"));
+        String movedText = moved.getText();
+        Assert.assertEquals(movedText, "Moved");
+
+        WebElement badrequest = driver.findElement(By.id("bad-request"));
+        String badrequestText = badrequest.getText();
+        Assert.assertEquals(badrequestText, "Bad Request");
+
+
+        WebElement unauthorized = driver.findElement(By.id("unauthorized"));
+        String unauthorizedText = unauthorized.getText();
+        Assert.assertEquals(unauthorizedText, "Unauthorized");
+
+        WebElement forbidden = driver.findElement(By.id("forbidden"));
+        String forbiddenText = forbidden.getText();
+        Assert.assertEquals(forbiddenText, "Forbidden");
+
+        WebElement notfound = driver.findElement(By.id("invalid-url"));
+        String notfoundText = notfound.getText();
+        Assert.assertEquals(notfoundText, "Not Found");
+
+        log.info("All the links are as expected.");
+
+        // Click on Home link
+
+        simplelink.click();
+
+        tabSwitcher.switchToNewTabAndAssertURL("https://demoqa.com/");
+
+        // Click on Dynamic link
+
+        dynamiclink.click();
+
+        tabSwitcher.switchToNewTabAndAssertURL("https://demoqa.com/");
+
+        // Click on Created link
+
+        By waitforcreatedLink = By.id("created");
+        waitUtility.waitAndClick(waitforcreatedLink);
+
+        String createdlinkclicked = driver.findElement(By.id("linkResponse")).getText();
+        Assert.assertEquals(createdlinkclicked, "Link has responded with staus 201 and status text Created");
+
+        // Click on No Content link
+
+        nocontent.click();
+
+        String nocontentclicked = driver.findElement(By.id("linkResponse")).getText();
+        Assert.assertEquals(nocontentclicked, "Link has responded with staus 204 and status text No Content");
+
+        // Click on Moved link
+
+        moved.click();
+
+        String movedclicked = driver.findElement(By.id("linkResponse")).getText();
+        Assert.assertEquals(movedclicked, "Link has responded with staus 301 and status text Moved Permanently");
+
+        // Click on Bad Request link
+
+        badrequest.click();
+
+        String badrequestclicked = driver.findElement(By.id("linkResponse")).getText();
+        Assert.assertEquals(badrequestclicked, "Link has responded with staus 400 and status text Bad Request");
+
+        // Click on Unauthorized link
+
+        unauthorized.click();
+
+        String unauthorizedclicked = driver.findElement(By.id("linkResponse")).getText();
+        Assert.assertEquals(unauthorizedclicked, "Link has responded with staus 401 and status text Unauthorized");
+
+        // Click on Forbidden link
+
+        forbidden.click();
+
+        String forbiddenclicked = driver.findElement(By.id("linkResponse")).getText();
+        Assert.assertEquals(forbiddenclicked, "Link has responded with staus 403 and status text Forbidden");
+
+        // Click on Not Found link
+
+        notfound.click();
+
+        String notfoundclicked = driver.findElement(By.id("linkResponse")).getText();
+        Assert.assertEquals(notfoundclicked, "Link has responded with staus 404 and status text Not Found");
+
+
+
+    }
+
 
 }
 
