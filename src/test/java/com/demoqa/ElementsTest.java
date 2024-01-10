@@ -188,6 +188,8 @@ public class ElementsTest extends TestUtilities {
                 Permananet Address :Test Permanent Address""");
 
         log.info("All the values are typed and submit button is clicked. The output is verified and it's as expected.");
+
+        log.info("Finishing Textbox Test");
     }
 
     @Test(dependsOnMethods = "textboxtest")
@@ -323,6 +325,9 @@ public class ElementsTest extends TestUtilities {
         WebElement dropdownworkspace = driver.findElement(By.xpath("(//button[@title='Toggle'])[4]"));
         dropdownworkspace.click();
 
+        log.info("All the checkboxes are working as expected and the feedback is displayed.");
+
+        log.info("Finishing Checkbox Test.");
     }
 
     @Test(dependsOnMethods = "checkboxtest")
@@ -375,6 +380,10 @@ public class ElementsTest extends TestUtilities {
 
         feedback = driver.findElement(By.cssSelector(".mt-3")).getText();
         Assert.assertEquals(feedback, "You have selected Impressive");
+
+        log.info("The radio buttons are working as expected and the feedback is displayed.");
+
+        log.info("Finishing Radio Button Test.");
 
     }
 
@@ -590,6 +599,8 @@ public class ElementsTest extends TestUtilities {
 
         log.info("The pagination works as expected after clicking next and previous buttons.");
 
+        log.info("Finishing Web Tables Test");
+
     }
 
     @Test(dependsOnMethods = "webtables")
@@ -634,6 +645,8 @@ public class ElementsTest extends TestUtilities {
         Assert.assertEquals(clickfeedback, "You have done a dynamic click");
 
         log.info("All the buttons are working correctly.");
+
+        log.info("Finishing Buttons Test");
 
     }
 

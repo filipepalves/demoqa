@@ -23,5 +23,26 @@
         </classes>
     </test>
 
+    <test name="Elements Test Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="test.java.com.demoqa.ElementsTest"/>
+        </classes>
+    </test>
+
+    <test name="Elements Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="test.java.com.demoqa.ElementsTest"/>
+        </classes>
+    </test>
+
+    <test name="Elements Safari">
+        <parameter name="browser" value="safari"/>
+        <classes>
+            <class name="test.java.com.demoqa.ElementsTest"/>
+        </classes>
+    </test>
+
 
 </suite>
