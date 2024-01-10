@@ -6,6 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 public class FormsTest extends TestUtilities {
 
 
@@ -41,115 +45,144 @@ public class FormsTest extends TestUtilities {
 
         log.info("Starting Practice Form Test");
 
-        // Click on Text Box button and verify all the elements
+        // Click on Pratice form button and verify all the elements
 
-        By textboxclick = By.id("item-0");
+        By textboxclick = By.cssSelector(".collapse.element-list.show > .menu-list > li#item-0");
         waitUtility.waitAndClick(textboxclick);
 
         String title = driver.findElement(By.cssSelector(".main-header")).getText();
-        Assert.assertEquals(title, "Text Box");
+        Assert.assertEquals(title, "Practice Form");
 
-        String fullname = driver.findElement(By.id("userName-label")).getText();
-        Assert.assertEquals(fullname, "Full Name");
+        String name = driver.findElement(By.id("userName-label")).getText();
+        Assert.assertEquals(name, "Name");
 
-        WebElement fullnametextbox = driver.findElement(By.id("userName"));
-        String fullnametextboxText = fullnametextbox.getAttribute("placeholder");
-        Assert.assertEquals(fullnametextboxText, "Full Name");
+        WebElement firstname = driver.findElement(By.id("firstName"));
+        String firstnameText = firstname.getAttribute("placeholder");
+        Assert.assertEquals(firstnameText, "First Name");
 
-        String email = driver.findElement(By.id("userEmail-label")).getText();
+        WebElement lastname = driver.findElement(By.id("lastName"));
+        String lastnameText = lastname.getAttribute("placeholder");
+        Assert.assertEquals(lastnameText, "Last Name");
+
+        String email = driver.findElement(By.id("userEmail-wrapper")).getText();
         Assert.assertEquals(email, "Email");
 
         WebElement emailtextbox = driver.findElement(By.id("userEmail"));
         String emailtextboxText = emailtextbox.getAttribute("placeholder");
         Assert.assertEquals(emailtextboxText, "name@example.com");
 
-        String currentaddress = driver.findElement(By.id("currentAddress-label")).getText();
-        Assert.assertEquals(currentaddress, "Current Address");
+        String gender = driver.findElement(By.cssSelector("div#genterWrapper > .col-md-3.col-sm-12")).getText();
+        Assert.assertEquals(gender, "Gender");
 
-        WebElement currentaddresstextbox = driver.findElement(By.id("currentAddress"));
-        String currentaddresstextboxText = currentaddresstextbox.getAttribute("placeholder");
-        Assert.assertEquals(currentaddresstextboxText, "Current Address");
+        js.executeScript("window.scrollBy(0, 300)");
 
-        String permanentaddress = driver.findElement(By.id("permanentAddress-label")).getText();
-        Assert.assertEquals(permanentaddress, "Permanent Address");
+        WebElement genderRadio = driver.findElement(By.id("gender-radio-1"));
+        String genderRadioText = genderRadio.getAttribute("value");
+        Assert.assertEquals(genderRadioText, "Male");
 
-        WebElement permanentaddresstextbox = driver.findElement(By.id("permanentAddress"));
-        String permanentaddresstextboxText = permanentaddresstextbox.getAttribute("placeholder");
-        Assert.assertEquals(permanentaddresstextboxText, "");
+        WebElement genderRadio2 = driver.findElement(By.id("gender-radio-2"));
+        String genderRadio2Text = genderRadio2.getAttribute("value");
+        Assert.assertEquals(genderRadio2Text, "Female");
 
-        log.info("All the labels are verified.");
+        WebElement genderRadio3 = driver.findElement(By.id("gender-radio-3"));
+        String genderRadio3Text = genderRadio3.getAttribute("value");
+        Assert.assertEquals(genderRadio3Text, "Other");
 
-        // Send keys to each element and verify the results
+        String mobile = driver.findElement(By.id("userNumber-label")).getText();
+        Assert.assertEquals(mobile, "Mobile(10 Digits)");
 
-        fullnametextbox.sendKeys("Test Name");
-        emailtextbox.sendKeys("Test Email");
-        currentaddresstextbox.sendKeys("Test Current Address");
-        permanentaddresstextbox.sendKeys("Test Permanent Address");
+        WebElement mobiletextbox = driver.findElement(By.id("userNumber"));
+        String mobiletextboxText = mobiletextbox.getAttribute("placeholder");
+        Assert.assertEquals(mobiletextboxText, "Mobile Number");
 
-        String fullnamevalue = fullnametextbox.getAttribute("value");
-        Assert.assertEquals(fullnamevalue, "Test Name");
+        String dateofbirth = driver.findElement(By.id("dateOfBirth-label")).getText();
+        Assert.assertEquals(dateofbirth, "Date of Birth");
 
-        String emailvalue = emailtextbox.getAttribute("value");
-        Assert.assertEquals(emailvalue, "Test Email");
+        WebElement dateofbirthtextbox = driver.findElement(By.id("dateOfBirthInput"));
+        String dateofbirthtextboxText = dateofbirthtextbox.getAttribute("value");
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        String formattedDate = today.format(formatter);
+        Assert.assertEquals(dateofbirthtextboxText, formattedDate);
 
-        String currentaddressvalue = currentaddresstextbox.getAttribute("value");
-        Assert.assertEquals(currentaddressvalue, "Test Current Address");
+        String subject = driver.findElement(By.cssSelector("#subjectsWrapper #subjects-label")).getText();
+        Assert.assertEquals(subject, "Subjects");
 
-        String permanentaddressvalue = permanentaddresstextbox.getAttribute("value");
-        Assert.assertEquals(permanentaddressvalue, "Test Permanent Address");
+        WebElement subjecttextbox = driver.findElement(By.id("subjectsContainer"));
+        subjecttextbox.isDisplayed();
 
-        log.info("All the values typed are verified and the same as expected.");
+        String hobbies = driver.findElement(By.cssSelector("div#hobbiesWrapper  label#subjects-label")).getText();
+        Assert.assertEquals(hobbies, "Hobbies");
 
-        // Clear all the values and verify the results
+        WebElement checkboxSports = driver.findElement(By.cssSelector("div#hobbiesWrapper > .col-md-9.col-sm-12 > div:nth-of-type(1) > label"));
+        String checkboxSportsText = checkboxSports.getText();
+        Assert.assertEquals(checkboxSportsText, "Sports");
 
-        fullnametextbox.clear();
-        emailtextbox.clear();
-        currentaddresstextbox.clear();
-        permanentaddresstextbox.clear();
+        WebElement checkboxReading = driver.findElement(By.cssSelector("div#hobbiesWrapper > .col-md-9.col-sm-12 > div:nth-of-type(2) > label"));
+        String checkboxReadingText = checkboxReading.getText();
+        Assert.assertEquals(checkboxReadingText, "Reading");
 
-        fullnamevalue = fullnametextbox.getAttribute("value");
-        Assert.assertEquals(fullnamevalue, "");
+        WebElement checkboxMusic = driver.findElement(By.cssSelector("div#hobbiesWrapper > .col-md-9.col-sm-12 > div:nth-of-type(3) > label"));
+        String checkboxMusicText = checkboxMusic.getText();
+        Assert.assertEquals(checkboxMusicText, "Music");
 
-        emailvalue = emailtextbox.getAttribute("value");
-        Assert.assertEquals(emailvalue, "");
+        String picture = driver.findElement(By.cssSelector("div:nth-of-type(8) > .col-md-3.col-sm-12")).getText();
+        Assert.assertEquals(picture, "Picture");
 
-        currentaddressvalue = currentaddresstextbox.getAttribute("value");
-        Assert.assertEquals(currentaddressvalue, "");
+        String selectPicture = driver.findElement(By.cssSelector(".form-file-label")).getText();
+        Assert.assertEquals(selectPicture, "Select picture");
 
-        permanentaddressvalue = permanentaddresstextbox.getAttribute("value");
-        Assert.assertEquals(permanentaddressvalue, "");
+        WebElement chooseButton = driver.findElement(By.cssSelector("#uploadPicture"));
+        chooseButton.isDisplayed();
 
-        log.info("All values are cleared.");
+        String currentAddress = driver.findElement(By.id("currentAddress-label")).getText();
+        Assert.assertEquals(currentAddress, "Current Address");
 
-        // Click on submit button and verify if nothing is displayed
+        WebElement currentAddressTextbox = driver.findElement(By.id("currentAddress"));
+        String currentAddressTextboxText = currentAddressTextbox.getAttribute("placeholder");
+        Assert.assertEquals(currentAddressTextboxText, "Current Address");
 
-        WebElement submitbutton = driver.findElement(By.id("submit"));
-        js.executeScript("arguments[0].click();", submitbutton);
+        String stateAndCity = driver.findElement(By.id("stateCity-label")).getText();
+        Assert.assertEquals(stateAndCity, "State and City");
 
-        log.info("Submit button is clicked. Nothing is displayed.");
+        WebElement stateDropdown = driver.findElement(By.cssSelector(".col-md-4.col-sm-12 > div#state"));
+        String stateDropdownText = stateDropdown.getText();
+        Assert.assertEquals(stateDropdownText, "Select State");
 
-        // Type all the value again and click on submit button
+        WebElement cityDropdown = driver.findElement(By.cssSelector(".col-md-4.col-sm-12 > div#city"));
+        String cityDropdownText = cityDropdown.getText();
+        Assert.assertEquals(cityDropdownText, "Select City");
 
-        fullnametextbox.sendKeys("Test Name");
-        emailtextbox.sendKeys("Test Email");
-        currentaddresstextbox.sendKeys("Test Current Address");
-        permanentaddresstextbox.sendKeys("Test Permanent Address");
+        WebElement submitButton = driver.findElement(By.id("submit"));
+        submitButton.isDisplayed();
 
-        js.executeScript("arguments[0].click();", submitbutton);
+        log.info("All the elements are as expected.");
 
-        String output = driver.findElement(By.id("output")).getText();
-        Assert.assertEquals(output, "");
+        // Click on submit button and verify all the mandatory fields
 
-        emailtextbox.clear();
-        emailtextbox.sendKeys("email@example.com");
-        js.executeScript("arguments[0].click();", submitbutton);
+        js.executeScript("arguments[0].click();", submitButton);
 
-        output = driver.findElement(By.id("output")).getText();
-        Assert.assertEquals(output, """
-                Name:Test Name
-                Email:email@example.com
-                Current Address :Test Current Address
-                Permananet Address :Test Permanent Address""");
+        List<WebElement> errorMessages = driver.findElements(By.cssSelector(".form-control.is-invalid, .was-validated .form-control:invalid"));
+
+        for (WebElement errorMessage : errorMessages) {
+
+            String borderColor = errorMessage.getCssValue("border-color");
+            Assert.assertEquals(borderColor, "rgb(220, 53, 69)");
+
+            String backgroundImage = errorMessage.getCssValue("background-image");
+            Assert.assertTrue(backgroundImage.contains("data:image/svg+xml,%3csvg"));
+
+        }
+
+        log.info("All the mandatory fields are with border line and warning icon after clicked without filling.");
+
+        // Give 2 of the mandatory fields and click on submit button
+
+        firstname.sendKeys("Filipe");
+
+        lastname.sendKeys("Alves");
+
+        js.executeScript("arguments[0].click();", submitButton);
 
         log.info("Finishing Practice Forms Test.");
 
