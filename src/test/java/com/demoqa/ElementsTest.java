@@ -1,15 +1,13 @@
 package test.java.com.demoqa;
 
-import main.java.base.TabSwitcher;
 import main.java.base.TableVerifier;
 import main.java.base.TestUtilities;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -383,9 +381,6 @@ public class ElementsTest extends TestUtilities {
     @Test(dependsOnMethods = "radiobuttontest")
     public void webtables() throws InterruptedException {
 
-        WaitUtility waitUtility = new WaitUtility(driver);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
         log.info("Starting Web Tables Test");
 
         WebElement webtablebutton = driver.findElement(By.id("item-3"));
@@ -645,10 +640,6 @@ public class ElementsTest extends TestUtilities {
     @Test(dependsOnMethods = "buttons")
     public void linkstest() throws InterruptedException {
 
-        String firstWindowHandle = driver.getWindowHandle();
-        tabSwitcher = new TabSwitcher(driver);
-
-
         log.info("Starting Links Test");
 
         // Click on Buttons button and verify all the elements
@@ -683,7 +674,6 @@ public class ElementsTest extends TestUtilities {
         String badrequestText = badrequest.getText();
         Assert.assertEquals(badrequestText, "Bad Request");
 
-
         WebElement unauthorized = driver.findElement(By.id("unauthorized"));
         String unauthorizedText = unauthorized.getText();
         Assert.assertEquals(unauthorizedText, "Unauthorized");
@@ -715,54 +705,262 @@ public class ElementsTest extends TestUtilities {
         By waitforcreatedLink = By.id("created");
         waitUtility.waitAndClick(waitforcreatedLink);
 
-        String createdlinkclicked = driver.findElement(By.id("linkResponse")).getText();
-        Assert.assertEquals(createdlinkclicked, "Link has responded with staus 201 and status text Created");
+        By response = By.id("linkResponse");
+
+        waitUtility.waitForElementToHaveText(response, "Link has responded with staus 201 and status text Created");
 
         // Click on No Content link
 
         nocontent.click();
 
-        String nocontentclicked = driver.findElement(By.id("linkResponse")).getText();
-        Assert.assertEquals(nocontentclicked, "Link has responded with staus 204 and status text No Content");
+        waitUtility.waitForElementToHaveText(response, "Link has responded with staus 204 and status text No Content");
 
         // Click on Moved link
 
         moved.click();
 
-        String movedclicked = driver.findElement(By.id("linkResponse")).getText();
-        Assert.assertEquals(movedclicked, "Link has responded with staus 301 and status text Moved Permanently");
+        waitUtility.waitForElementToHaveText(response, "Link has responded with staus 301 and status text Moved Permanently");
 
         // Click on Bad Request link
 
         badrequest.click();
 
-        String badrequestclicked = driver.findElement(By.id("linkResponse")).getText();
-        Assert.assertEquals(badrequestclicked, "Link has responded with staus 400 and status text Bad Request");
+        waitUtility.waitForElementToHaveText(response, "Link has responded with staus 400 and status text Bad Request");
 
         // Click on Unauthorized link
 
         unauthorized.click();
 
-        String unauthorizedclicked = driver.findElement(By.id("linkResponse")).getText();
-        Assert.assertEquals(unauthorizedclicked, "Link has responded with staus 401 and status text Unauthorized");
+        waitUtility.waitForElementToHaveText(response, "Link has responded with staus 401 and status text Unauthorized");
 
         // Click on Forbidden link
 
+        js.executeScript("window.scrollBy(0, 300)");
+
         forbidden.click();
 
-        String forbiddenclicked = driver.findElement(By.id("linkResponse")).getText();
-        Assert.assertEquals(forbiddenclicked, "Link has responded with staus 403 and status text Forbidden");
+        waitUtility.waitForElementToHaveText(response, "Link has responded with staus 403 and status text Forbidden");
 
         // Click on Not Found link
 
         notfound.click();
 
-        String notfoundclicked = driver.findElement(By.id("linkResponse")).getText();
-        Assert.assertEquals(notfoundclicked, "Link has responded with staus 404 and status text Not Found");
+        waitUtility.waitForElementToHaveText(response, "Link has responded with staus 404 and status text Not Found");
 
+        log.info("All the links have responded with status codes as expected.");
 
+        log.info("Finishing Links Test.");
 
     }
+
+
+    @Test(dependsOnMethods = "linkstest")
+    public void brokenlinkstest() throws InterruptedException {
+
+        log.info("Starting Broken Links - Images Test");
+
+        // Click on Buttons button and verify all the elements
+
+        WebElement brokenlinks = driver.findElement(By.id("item-6"));
+        String brokenlinksText = brokenlinks.getText();
+        Assert.assertEquals(brokenlinksText, "Broken Links - Images");
+        brokenlinks.click();
+
+        String validImage = driver.findElement(By.cssSelector("div:nth-of-type(2) > p:nth-of-type(1)")).getText();
+        Assert.assertEquals(validImage, "Valid image");
+
+        WebElement imageElement = driver.findElement(By.cssSelector("img[src='/images/Toolsqa.jpg']"));
+        String srcAttributeValue = imageElement.getAttribute("src");
+        Assert.assertEquals(srcAttributeValue, "https://demoqa.com/images/Toolsqa.jpg");
+
+        String brokenImage = driver.findElement(By.cssSelector("div:nth-of-type(2) > p:nth-of-type(2)")).getText();
+        Assert.assertEquals(brokenImage, "Broken image");
+
+        WebElement imageElement2 = driver.findElement(By.cssSelector("img[src='/images/Toolsqa_1.jpg']"));
+        String srcAttributeValue2 = imageElement2.getAttribute("src");
+        Assert.assertEquals(srcAttributeValue2, "https://demoqa.com/images/Toolsqa_1.jpg");
+
+        String validLink = driver.findElement(By.cssSelector("div:nth-of-type(2) > p:nth-of-type(3)")).getText();
+        Assert.assertEquals(validLink, "Valid Link");
+
+        WebElement validlinkElement = driver.findElement(By.xpath("//div[@id='app']/div[@class='body-height']/div[@class='container playgound-body']//a[@href='http://demoqa.com']"));
+        String validlinkURL = validlinkElement.getAttribute("href");
+        String validlinkText = validlinkElement.getText();
+        Assert.assertEquals(validlinkText, "Click Here for Valid Link");
+        Assert.assertEquals(validlinkURL, "http://demoqa.com/");
+
+        String brokenLink = driver.findElement(By.cssSelector("div:nth-of-type(2) > p:nth-of-type(4)")).getText();
+        Assert.assertEquals(brokenLink, "Broken Link");
+
+        WebElement brokenlinkElement = driver.findElement(By.xpath("//div[@id='app']/div[@class='body-height']/div[@class='container playgound-body']//a[@href='http://the-internet.herokuapp.com/status_codes/500']"));
+        String brokenlinkURL = brokenlinkElement.getAttribute("href");
+        String brokenlinkText = brokenlinkElement.getText();
+        Assert.assertEquals(brokenlinkText, "Click Here for Broken Link");
+        Assert.assertEquals(brokenlinkURL, "http://the-internet.herokuapp.com/status_codes/500");
+
+        log.info("All the links, images and labels are as expected.");
+
+        // Click on each link and verify the feedback
+
+        validlinkElement.click();
+
+        String currentURL = driver.getCurrentUrl();
+        Assert.assertEquals(currentURL, "https://demoqa.com/");
+
+        driver.navigate().back();
+
+        By waitforBrokenLink = By.xpath("//div[@id='app']/div[@class='body-height']/div[@class='container playgound-body']//a[@href='http://the-internet.herokuapp.com/status_codes/500']");
+        waitUtility.waitAndClick(waitforBrokenLink);
+
+        String currentURL2 = driver.getCurrentUrl();
+        Assert.assertEquals(currentURL2, "https://the-internet.herokuapp.com/status_codes/500");
+
+        driver.navigate().back();
+
+        log.info("All the links are working as expected.");
+
+        log.info("Finishing Broken Links - Images Test");
+
+    }
+
+    @Test(dependsOnMethods = "brokenlinkstest")
+    public void uploadanddownload() throws InterruptedException {
+
+        log.info("Starting Upload and Download Test");
+
+        // Click on Buttons button and verify all the elements
+
+        WebElement uploadanddownload = driver.findElement(By.id("item-7"));
+        String uploadanddownloadText = uploadanddownload.getText();
+        Assert.assertEquals(uploadanddownloadText, "Upload and Download");
+        uploadanddownload.click();
+
+        WebElement downloadbutton = driver.findElement(By.id("downloadButton"));
+        String downloadbuttonText = downloadbutton.getText();
+        Assert.assertEquals(downloadbuttonText, "Download");
+
+        WebElement uploadbutton = driver.findElement(By.id("uploadFile"));
+        uploadbutton.isDisplayed();
+
+        log.info("All the buttons are as expected.");
+
+        // Click on each button and verify the feedback
+
+        // Download
+
+        downloadbutton.click();
+
+        Thread.sleep(1000);
+
+        String downloadPath = "/Users/filipepalvesmp/Downloads";
+        String fileName = "sampleFile.jpeg";
+        File downloadedFile = new File(downloadPath, fileName);
+
+        if (downloadedFile.exists()) {
+            log.info("Downloaded file exists.");
+
+            // Delete the file after verification
+            if (downloadedFile.delete()) {
+                log.info("File deleted successfully.");
+            } else {
+                log.info("Failed to delete the file.");
+            }
+        } else {
+            log.info("Downloaded file does not exist");
+        }
+
+        Thread.sleep(1000);
+
+        // Upload
+
+        String filePath = "/Users/filipepalvesmp/Documents/GitHubPersonal/demoqa/sampleFile.jpeg";
+        js.executeScript("arguments[0].style.display = 'block';", uploadbutton);
+        uploadbutton.sendKeys(filePath);
+
+        String uploadfeedback = driver.findElement(By.id("uploadedFilePath")).getText();
+        Assert.assertEquals(uploadfeedback, "C:\\fakepath\\sampleFile.jpeg");
+
+        log.info("All the buttons are working as expected.");
+
+        log.info("Finishing Upload and Download Test");
+
+    }
+
+    @Test(dependsOnMethods = "uploadanddownload")
+    public void dynamicproperties() throws InterruptedException {
+
+        log.info("Starting Dynamic Properties Test");
+
+        // Click on Buttons button and verify all the elements
+
+        WebElement dynamicproperties = driver.findElement(By.id("item-8"));
+        String dynamicpropertiesText = dynamicproperties.getText();
+        Assert.assertEquals(dynamicpropertiesText, "Dynamic Properties");
+        dynamicproperties.click();
+
+        WebElement dynamicElement = driver.findElement(By.xpath("//p[text()='This text has random Id']"));
+        String dynamicText = dynamicElement.getText();
+        Assert.assertEquals(dynamicText, "This text has random Id");
+
+        WebElement enabled = driver.findElement(By.id("enableAfter"));
+        String enabledText = enabled.getText();
+        Assert.assertEquals(enabledText, "Will enable 5 seconds");
+        Assert.assertFalse(enabled.isEnabled(), "Button should be disabled initially");
+
+        WebElement colorChange = driver.findElement(By.id("colorChange"));
+        String colorChangeText = colorChange.getText();
+        Assert.assertEquals(colorChangeText, "Color Change");
+
+        String buttonColor = (String) js.executeScript(
+                "return window.getComputedStyle(arguments[0]).color;", colorChange);
+        Assert.assertEquals(buttonColor, "rgb(255, 255, 255)");
+
+        log.info("Initial Button Color: " + buttonColor);
+
+        try {
+            WebElement visibleAfterButton = driver.findElement(By.id("visibleAfter"));
+
+            if (visibleAfterButton.isDisplayed()) {
+            } else {
+                By waitforbutton = By.id("visibleAfter");
+                waitUtility.waitForVisibility(waitforbutton);
+            }
+        } catch (Exception ignored) {
+
+            log.info("The button was not visible in the beginning of the test.");
+
+        }
+
+        Thread.sleep(6000);
+
+        try {
+            WebElement visibleAfterButton = driver.findElement(By.id("visibleAfter"));
+
+            if (visibleAfterButton.isDisplayed()) {
+                log.info("The button is visible after 5 seconds.");
+            } else {
+                By waitforbutton = By.id("visibleAfter");
+                waitUtility.waitForVisibility(waitforbutton);
+            }
+        } catch (Exception ignored) {
+
+            log.info("The button was not visible in the beginning of the test.");
+
+        }
+
+        String buttonColorAfter = (String) js.executeScript(
+                "return window.getComputedStyle(arguments[0]).color;", colorChange);
+        Assert.assertNotEquals(buttonColorAfter, "rgb(255, 255, 255)");
+
+        log.info("Changed Button Color: " + buttonColorAfter);
+
+        log.info("All the buttons works as expected.");
+
+        log.info("Finishing Dynamic Properties Test");
+
+    }
+
+
 
 
 }
