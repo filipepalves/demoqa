@@ -87,11 +87,6 @@ public class TestUtilities extends BaseTest {
             }
         }
 
-        public void waitFor(Duration duration) {
-        }
-
-        public void isElementPresent(By by) {
-        }
 
         public void closeAndSwitchToFirstTab(WebDriver driver, String firstWindowHandle) {
             for (String windowHandle : driver.getWindowHandles()) {

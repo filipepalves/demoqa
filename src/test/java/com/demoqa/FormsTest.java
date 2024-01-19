@@ -3,6 +3,7 @@ package test.java.com.demoqa;
 import main.java.base.TestUtilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -41,7 +42,7 @@ public class FormsTest extends TestUtilities {
     }
 
     @Test(dependsOnMethods = "formstest")
-    public void practiceformstest() {
+    public void practiceformstest() throws InterruptedException {
 
         log.info("Starting Practice Form Test");
 
@@ -162,7 +163,20 @@ public class FormsTest extends TestUtilities {
 
         js.executeScript("arguments[0].click();", submitButton);
 
-        List<WebElement> errorMessages = driver.findElements(By.cssSelector(".form-control.is-invalid, .was-validated .form-control:invalid"));
+        Thread.sleep(500);
+
+        List<WebElement> errorMessages = driver.findElements(By.cssSelector(".form-control.is-invalid, .was-validated .form-control:invalid, .custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label"));
+
+        Assert.assertEquals(errorMessages.size(), 6, "Expected 6 error messages, but found: " + errorMessages.size());
+
+        for (WebElement errorMessage : errorMessages) {
+
+            String borderColor = errorMessage.getCssValue("border-color");
+            Assert.assertEquals(borderColor, "rgb(220, 53, 69)");
+
+        }
+
+        errorMessages = driver.findElements(By.cssSelector(".form-control.is-invalid, .was-validated .form-control:invalid"));
 
         for (WebElement errorMessage : errorMessages) {
 
@@ -176,13 +190,61 @@ public class FormsTest extends TestUtilities {
 
         log.info("All the mandatory fields are with border line and warning icon after clicked without filling.");
 
-        // Give 2 of the mandatory fields and click on submit button
+        // Give 2 of the mandatory fields and click on submit button and verify if only 4 error message is displayed
 
         firstname.sendKeys("Filipe");
 
         lastname.sendKeys("Alves");
 
         js.executeScript("arguments[0].click();", submitButton);
+
+        errorMessages = driver.findElements(By.cssSelector(".form-control.is-invalid, .was-validated .form-control:invalid, .custom-control-input.is-invalid~.custom-control-label, .was-validated .custom-control-input:invalid~.custom-control-label"));
+
+        Assert.assertEquals(errorMessages.size(), 4, "Expected 4 error messages, but found: " + errorMessages.size());
+
+        if (!errorMessages.isEmpty()) {
+            WebElement errorMessage = errorMessages.get(0);
+
+            String borderColor = errorMessage.getCssValue("border-color");
+            Assert.assertEquals(borderColor, "rgb(220, 53, 69)");
+
+        }
+
+        // Give all the mandatory fields and click on submit button and verify if no error message is displayed
+
+        emailtextbox.sendKeys("filipealves@qa.com");
+
+        js.executeScript("arguments[0].click();", genderRadio);
+
+        mobiletextbox.sendKeys("123456789");
+        Assert.assertTrue(mobiletextbox.getCssValue("border-color").equals("rgb(220, 53, 69)"));
+        mobiletextbox.clear();
+        mobiletextbox.sendKeys("1234567890");
+        Thread.sleep(500);
+        Assert.assertTrue(mobiletextbox.getCssValue("border-color").equals("rgb(40, 167, 69)"));
+
+        log.info("All the mandatory fields are without border line with red color and without warning icon after filled.");
+
+        // Test the date text box
+
+        dateofbirthtextbox.click();
+
+        Select yearDropdown = new Select(driver.findElement(By.className("react-datepicker__year-select")));
+        yearDropdown.selectByVisibleText("1987");
+        Select monthDropdown = new Select(driver.findElement(By.className("react-datepicker__month-select")));
+        monthDropdown.selectByVisibleText("June");
+        WebElement daySelected = driver.findElement(By.cssSelector(".react-datepicker__day.react-datepicker__day--007.react-datepicker__day--weekend"));
+        daySelected.click();
+
+        dateofbirthtextboxText = dateofbirthtextbox.getAttribute("value");
+        Assert.assertEquals(dateofbirthtextboxText, "07 Jun 1987");
+
+        // Type some information on subject
+
+        subjecttextbox.click();
+        js.executeScript("arguments[0].value='a';", subjecttextbox);
+
+        Assert.assertTrue(subjecttextbox.getAttribute("value").equals("This autometed test was created by Filipe Alves"));
 
         log.info("Finishing Practice Forms Test.");
 
