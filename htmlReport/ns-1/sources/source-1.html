@@ -1,0 +1,765 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ElementsTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test.java.com.demoqa</a>
+</div>
+
+<h1>Coverage Summary for Class: ElementsTest (test.java.com.demoqa)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ElementsTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    99.7%
+  </span>
+  <span class="absValue">
+    (366/367)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test.java.com.demoqa;
+&nbsp;
+&nbsp;import main.java.base.TestUtilities;
+&nbsp;import org.openqa.selenium.By;
+&nbsp;import org.openqa.selenium.JavascriptExecutor;
+&nbsp;import org.openqa.selenium.WebElement;
+&nbsp;import org.openqa.selenium.interactions.Actions;
+&nbsp;import org.openqa.selenium.support.ui.Select;
+&nbsp;import org.testng.Assert;
+&nbsp;import org.testng.annotations.Test;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="fc">&nbsp;public class ElementsTest extends TestUtilities {</b>
+&nbsp;
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void elementstest() {
+&nbsp;
+<b class="fc">&nbsp;        WaitUtility waitUtility = new WaitUtility(driver);</b>
+<b class="fc">&nbsp;        JavascriptExecutor js = (JavascriptExecutor) driver;</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Starting Elements Test&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String url = &quot;https://demoqa.com/&quot;;</b>
+<b class="fc">&nbsp;        driver.get(url);</b>
+&nbsp;
+&nbsp;        // Click on elements button and verify all the elements
+<b class="fc">&nbsp;        By elementsclick = By.cssSelector(&quot;.category-cards [class=&#39;card mt-4 top-card&#39;]:nth-of-type(1)&quot;);</b>
+<b class="fc">&nbsp;        waitUtility.waitAndClick(elementsclick);</b>
+&nbsp;
+<b class="fc">&nbsp;        String title = driver.findElement(By.cssSelector(&quot;.main-header&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(title, &quot;Elements&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String pleaseselect = driver.findElement(By.cssSelector(&quot;.col-12.mt-4.col-md-6&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(pleaseselect, &quot;Please select an item from left to start practice.&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement textboxbutton = driver.findElement(By.id(&quot;item-0&quot;));</b>
+<b class="fc">&nbsp;        String textboxbuttonText = textboxbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(textboxbuttonText, &quot;Text Box&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement checkboxbutton = driver.findElement(By.id(&quot;item-1&quot;));</b>
+<b class="fc">&nbsp;        String checkboxbuttonText = checkboxbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(checkboxbuttonText, &quot;Check Box&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement radiobuttonbutton = driver.findElement(By.id(&quot;item-2&quot;));</b>
+<b class="fc">&nbsp;        String radiobuttonbuttonText = radiobuttonbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(radiobuttonbuttonText, &quot;Radio Button&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement webtablebutton = driver.findElement(By.id(&quot;item-3&quot;));</b>
+<b class="fc">&nbsp;        String webtablebuttonText = webtablebutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(webtablebuttonText, &quot;Web Tables&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement buttonsbutton = driver.findElement(By.id(&quot;item-4&quot;));</b>
+<b class="fc">&nbsp;        String buttonsbuttonText = buttonsbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(buttonsbuttonText, &quot;Buttons&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement linksbutton = driver.findElement(By.id(&quot;item-5&quot;));</b>
+<b class="fc">&nbsp;        String linksbuttonText = linksbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(linksbuttonText, &quot;Links&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement brokenlinksbutton = driver.findElement(By.id(&quot;item-6&quot;));</b>
+<b class="fc">&nbsp;        String brokenlinksbuttonText = brokenlinksbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(brokenlinksbuttonText, &quot;Broken Links - Images&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement uploadanddownloadbutton = driver.findElement(By.id(&quot;item-7&quot;));</b>
+<b class="fc">&nbsp;        String uploadanddownloadbuttonText = uploadanddownloadbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(uploadanddownloadbuttonText, &quot;Upload and Download&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement dynamicpropertiesbutton = driver.findElement(By.id(&quot;item-8&quot;));</b>
+<b class="fc">&nbsp;        String dynamicpropertiesbuttonText = dynamicpropertiesbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(dynamicpropertiesbuttonText, &quot;Dynamic Properties&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the labels are verified. Ending Elements Test&quot;);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test(dependsOnMethods = &quot;elementstest&quot;)
+&nbsp;    public void textboxtest() {
+&nbsp;
+<b class="fc">&nbsp;        WaitUtility waitUtility = new WaitUtility(driver);</b>
+<b class="fc">&nbsp;        JavascriptExecutor js = (JavascriptExecutor) driver;</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Starting Textbox Test&quot;);</b>
+&nbsp;
+&nbsp;        // Click on Text Box button and verify all the elements
+&nbsp;
+<b class="fc">&nbsp;        By textboxclick = By.id(&quot;item-0&quot;);</b>
+<b class="fc">&nbsp;        waitUtility.waitAndClick(textboxclick);</b>
+&nbsp;
+<b class="fc">&nbsp;        String title = driver.findElement(By.cssSelector(&quot;.main-header&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(title, &quot;Text Box&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String fullname = driver.findElement(By.id(&quot;userName-label&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(fullname, &quot;Full Name&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement fullnametextbox = driver.findElement(By.id(&quot;userName&quot;));</b>
+<b class="fc">&nbsp;        String fullnametextboxText = fullnametextbox.getAttribute(&quot;placeholder&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(fullnametextboxText, &quot;Full Name&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String email = driver.findElement(By.id(&quot;userEmail-label&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(email, &quot;Email&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement emailtextbox = driver.findElement(By.id(&quot;userEmail&quot;));</b>
+<b class="fc">&nbsp;        String emailtextboxText = emailtextbox.getAttribute(&quot;placeholder&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(emailtextboxText, &quot;name@example.com&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String currentaddress = driver.findElement(By.id(&quot;currentAddress-label&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(currentaddress, &quot;Current Address&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement currentaddresstextbox = driver.findElement(By.id(&quot;currentAddress&quot;));</b>
+<b class="fc">&nbsp;        String currentaddresstextboxText = currentaddresstextbox.getAttribute(&quot;placeholder&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(currentaddresstextboxText, &quot;Current Address&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String permanentaddress = driver.findElement(By.id(&quot;permanentAddress-label&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(permanentaddress, &quot;Permanent Address&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement permanentaddresstextbox = driver.findElement(By.id(&quot;permanentAddress&quot;));</b>
+<b class="fc">&nbsp;        String permanentaddresstextboxText = permanentaddresstextbox.getAttribute(&quot;placeholder&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(permanentaddresstextboxText, &quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the labels are verified.&quot;);</b>
+&nbsp;
+&nbsp;        // Send keys to each element and verify the results
+&nbsp;
+<b class="fc">&nbsp;        fullnametextbox.sendKeys(&quot;Test Name&quot;);</b>
+<b class="fc">&nbsp;        emailtextbox.sendKeys(&quot;Test Email&quot;);</b>
+<b class="fc">&nbsp;        currentaddresstextbox.sendKeys(&quot;Test Current Address&quot;);</b>
+<b class="fc">&nbsp;        permanentaddresstextbox.sendKeys(&quot;Test Permanent Address&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String fullnamevalue = fullnametextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(fullnamevalue, &quot;Test Name&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String emailvalue = emailtextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(emailvalue, &quot;Test Email&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String currentaddressvalue = currentaddresstextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(currentaddressvalue, &quot;Test Current Address&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String permanentaddressvalue = permanentaddresstextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(permanentaddressvalue, &quot;Test Permanent Address&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the values typed are verified and the same as expected.&quot;);</b>
+&nbsp;
+&nbsp;        // Clear all the values and verify the results
+&nbsp;
+<b class="fc">&nbsp;        fullnametextbox.clear();</b>
+<b class="fc">&nbsp;        emailtextbox.clear();</b>
+<b class="fc">&nbsp;        currentaddresstextbox.clear();</b>
+<b class="fc">&nbsp;        permanentaddresstextbox.clear();</b>
+&nbsp;
+<b class="fc">&nbsp;        fullnamevalue = fullnametextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(fullnamevalue, &quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        emailvalue = emailtextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(emailvalue, &quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        currentaddressvalue = currentaddresstextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(currentaddressvalue, &quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        permanentaddressvalue = permanentaddresstextbox.getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(permanentaddressvalue, &quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All values are cleared.&quot;);</b>
+&nbsp;
+&nbsp;        // Click on submit button and verify if nothing is displayed
+&nbsp;
+<b class="fc">&nbsp;        WebElement submitbutton = driver.findElement(By.id(&quot;submit&quot;));</b>
+<b class="fc">&nbsp;        js.executeScript(&quot;arguments[0].click();&quot;, submitbutton);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Submit button is clicked. Nothing is displayed.&quot;);</b>
+&nbsp;
+&nbsp;        // Type all the value again and click on submit button
+&nbsp;
+<b class="fc">&nbsp;        fullnametextbox.sendKeys(&quot;Test Name&quot;);</b>
+<b class="fc">&nbsp;        emailtextbox.sendKeys(&quot;Test Email&quot;);</b>
+<b class="fc">&nbsp;        currentaddresstextbox.sendKeys(&quot;Test Current Address&quot;);</b>
+<b class="fc">&nbsp;        permanentaddresstextbox.sendKeys(&quot;Test Permanent Address&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        js.executeScript(&quot;arguments[0].click();&quot;, submitbutton);</b>
+&nbsp;
+<b class="fc">&nbsp;        String output = driver.findElement(By.id(&quot;output&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(output, &quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        emailtextbox.clear();</b>
+<b class="fc">&nbsp;        emailtextbox.sendKeys(&quot;email@example.com&quot;);</b>
+<b class="fc">&nbsp;        js.executeScript(&quot;arguments[0].click();&quot;, submitbutton);</b>
+&nbsp;
+<b class="fc">&nbsp;        output = driver.findElement(By.id(&quot;output&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(output, &quot;&quot;&quot;</b>
+&nbsp;                Name:Test Name
+&nbsp;                Email:email@example.com
+&nbsp;                Current Address :Test Current Address
+&nbsp;                Permananet Address :Test Permanent Address&quot;&quot;&quot;);
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the values are typed and submit button is clicked. The output is verified and it&#39;s as expected.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test(dependsOnMethods = &quot;textboxtest&quot;)
+&nbsp;    public void checkboxtest() {
+&nbsp;
+<b class="fc">&nbsp;        WaitUtility waitUtility = new WaitUtility(driver);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Starting Checkbox Test&quot;);</b>
+&nbsp;
+&nbsp;        // Click on Check Box button, click on each dropdown and verify all the elements
+&nbsp;
+<b class="fc">&nbsp;        By checkboxclick = By.id(&quot;item-1&quot;);</b>
+<b class="fc">&nbsp;        String checkboxclickText = driver.findElement(checkboxclick).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(checkboxclickText, &quot;Check Box&quot;);</b>
+<b class="fc">&nbsp;        waitUtility.waitAndClick(checkboxclick);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement expandAllButton = driver.findElement(By.cssSelector(&quot;.rct-option-expand-all&quot;));</b>
+<b class="fc">&nbsp;        expandAllButton.click();</b>
+&nbsp;
+&nbsp;        // Find and click specific checkboxes by their IDs
+&nbsp;
+<b class="fc">&nbsp;        WebElement notesCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Notes&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        notesCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        String result = driver.findElement(By.id(&quot;result&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(result, &quot;You have selected :\n&quot; +</b>
+&nbsp;                &quot;notes&quot;);
+&nbsp;
+<b class="fc">&nbsp;        WebElement commandsCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Commands&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        commandsCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        result = driver.findElement(By.id(&quot;result&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(result, &quot;&quot;&quot;</b>
+&nbsp;                You have selected :
+&nbsp;                desktop
+&nbsp;                notes
+&nbsp;                commands&quot;&quot;&quot;);
+&nbsp;
+<b class="fc">&nbsp;        WebElement desktopCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Desktop&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        desktopCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement reactCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;React&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        reactCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement angularCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Angular&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        angularCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement veuCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Veu&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        veuCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        result = driver.findElement(By.id(&quot;result&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(result, &quot;&quot;&quot;</b>
+&nbsp;                You have selected :
+&nbsp;                workspace
+&nbsp;                react
+&nbsp;                angular
+&nbsp;                veu&quot;&quot;&quot;);
+&nbsp;
+<b class="fc">&nbsp;        JavascriptExecutor js = (JavascriptExecutor) driver;</b>
+<b class="fc">&nbsp;        js.executeScript(&quot;window.scrollTo(0, document.body.scrollHeight)&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement workspaceCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;WorkSpace&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        workspaceCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement privateCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Private&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        privateCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement publicCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Public&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        publicCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement classifiedCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Classified&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        classifiedCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement generalCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;General&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        generalCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        result = driver.findElement(By.id(&quot;result&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(result, &quot;&quot;&quot;</b>
+&nbsp;                You have selected :
+&nbsp;                office
+&nbsp;                public
+&nbsp;                private
+&nbsp;                classified
+&nbsp;                general&quot;&quot;&quot;);
+&nbsp;
+<b class="fc">&nbsp;        WebElement officeCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Office&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        officeCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement wordfileCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Word File.doc&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        wordfileCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement excelfileCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Excel File.doc&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        excelfileCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        result = driver.findElement(By.id(&quot;result&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(result, &quot;&quot;&quot;</b>
+&nbsp;                You have selected :
+&nbsp;                downloads
+&nbsp;                wordFile
+&nbsp;                excelFile&quot;&quot;&quot;);
+&nbsp;
+<b class="fc">&nbsp;        WebElement homeCheckbox = driver.findElement(By.xpath(&quot;//span[contains(text(),&#39;Home&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        homeCheckbox.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        result = driver.findElement(By.id(&quot;result&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(result, &quot;&quot;&quot;</b>
+&nbsp;                You have selected :
+&nbsp;                home
+&nbsp;                desktop
+&nbsp;                notes
+&nbsp;                commands
+&nbsp;                documents
+&nbsp;                workspace
+&nbsp;                react
+&nbsp;                angular
+&nbsp;                veu
+&nbsp;                office
+&nbsp;                public
+&nbsp;                private
+&nbsp;                classified
+&nbsp;                general
+&nbsp;                downloads
+&nbsp;                wordFile
+&nbsp;                excelFile&quot;&quot;&quot;);
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the checkboxes are working as expected and the feedback is displayed correctly.&quot;);</b>
+&nbsp;
+&nbsp;        // Click on some dropdown buttons
+&nbsp;
+<b class="fc">&nbsp;        WebElement dropdowndesktop = driver.findElement(By.xpath(&quot;(//button[@title=&#39;Toggle&#39;])[2]&quot;));</b>
+<b class="fc">&nbsp;        dropdowndesktop.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement dropdowndocuments = driver.findElement(By.xpath(&quot;(//button[@title=&#39;Toggle&#39;])[3]&quot;));</b>
+<b class="fc">&nbsp;        dropdowndocuments.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement dropdownworkspace = driver.findElement(By.xpath(&quot;(//button[@title=&#39;Toggle&#39;])[4]&quot;));</b>
+<b class="fc">&nbsp;        dropdownworkspace.click();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test(dependsOnMethods = &quot;checkboxtest&quot;)
+&nbsp;    public void radiobuttontest() {
+&nbsp;
+<b class="fc">&nbsp;        WaitUtility waitUtility = new WaitUtility(driver);</b>
+<b class="fc">&nbsp;        JavascriptExecutor js = (JavascriptExecutor) driver;</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Starting Radio Button Test&quot;);</b>
+&nbsp;
+&nbsp;        // Click on Radio button and verify all the elements
+&nbsp;
+<b class="fc">&nbsp;        WebElement radiobuttonbutton = driver.findElement(By.id(&quot;item-2&quot;));</b>
+<b class="fc">&nbsp;        String radiobuttonbuttonText = radiobuttonbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(radiobuttonbuttonText, &quot;Radio Button&quot;);</b>
+<b class="fc">&nbsp;        radiobuttonbutton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        String title = driver.findElement(By.cssSelector(&quot;.mb-3&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(title, &quot;Do you like the site?&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String yes = driver.findElement(By.cssSelector(&quot;label[for=&#39;yesRadio&#39;]&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(yes, &quot;Yes&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String impressive = driver.findElement(By.cssSelector(&quot;label[for=&#39;impressiveRadio&#39;]&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(impressive, &quot;Impressive&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String no = driver.findElement(By.cssSelector(&quot;label[for=&#39;noRadio&#39;]&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(no, &quot;No&quot;);</b>
+&nbsp;
+&nbsp;        // Click on each radio button and verify the feedback
+&nbsp;
+<b class="fc">&nbsp;        WebElement yesRadio = driver.findElement(By.cssSelector(&quot;label[for=&#39;yesRadio&#39;]&quot;));</b>
+<b class="fc">&nbsp;        yesRadio.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        String feedback = driver.findElement(By.cssSelector(&quot;.mt-3&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(feedback, &quot;You have selected Yes&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement impressiveRadio = driver.findElement(By.cssSelector(&quot;label[for=&#39;impressiveRadio&#39;]&quot;));</b>
+<b class="fc">&nbsp;        impressiveRadio.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        feedback = driver.findElement(By.cssSelector(&quot;.mt-3&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(feedback, &quot;You have selected Impressive&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement noRadio = driver.findElement(By.id(&quot;noRadio&quot;));</b>
+&nbsp;
+<b class="fc">&nbsp;        boolean isClickable = noRadio.isEnabled();</b>
+&nbsp;
+<b class="fc">&nbsp;        if (!isClickable) {</b>
+<b class="fc">&nbsp;            log.info(&quot;The element is not clickable.&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            log.info(&quot;The element is clickable.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        feedback = driver.findElement(By.cssSelector(&quot;.mt-3&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(feedback, &quot;You have selected Impressive&quot;);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test(dependsOnMethods = &quot;radiobuttontest&quot;)
+&nbsp;    public void webtables() throws InterruptedException {
+&nbsp;
+<b class="fc">&nbsp;        WaitUtility waitUtility = new WaitUtility(driver);</b>
+<b class="fc">&nbsp;        JavascriptExecutor js = (JavascriptExecutor) driver;</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Starting Web Tables Test&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement webtablebutton = driver.findElement(By.id(&quot;item-3&quot;));</b>
+<b class="fc">&nbsp;        String webtablebuttonText = webtablebutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(webtablebuttonText, &quot;Web Tables&quot;);</b>
+<b class="fc">&nbsp;        webtablebutton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement addbutton = driver.findElement(By.id(&quot;addNewRecordButton&quot;));</b>
+<b class="fc">&nbsp;        addbutton.isDisplayed();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement textbox = driver.findElement(By.id(&quot;searchBox&quot;));</b>
+<b class="fc">&nbsp;        String searchboxText = textbox.getAttribute(&quot;placeholder&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(searchboxText, &quot;Type to search&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement firstname = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-resizable-header-content&#39; and text()=&#39;First Name&#39;]&quot;));</b>
+<b class="fc">&nbsp;        String firstnameText = firstname.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(firstnameText, &quot;First Name&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement lastname = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-resizable-header-content&#39; and text()=&#39;Last Name&#39;]&quot;));</b>
+<b class="fc">&nbsp;        String lastnameText = lastname.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(lastnameText, &quot;Last Name&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement age = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-resizable-header-content&#39; and text()=&#39;Age&#39;]&quot;));</b>
+<b class="fc">&nbsp;        String ageText = age.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(ageText, &quot;Age&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement email = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-resizable-header-content&#39; and text()=&#39;Email&#39;]&quot;));</b>
+<b class="fc">&nbsp;        String emailText = email.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(emailText, &quot;Email&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement salary = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-resizable-header-content&#39; and text()=&#39;Salary&#39;]&quot;));</b>
+<b class="fc">&nbsp;        String salaryText = salary.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(salaryText, &quot;Salary&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement department = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-resizable-header-content&#39; and text()=&#39;Department&#39;]&quot;));</b>
+<b class="fc">&nbsp;        String departmentText = department.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(departmentText, &quot;Department&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement action = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-resizable-header-content&#39; and text()=&#39;Action&#39;]&quot;));</b>
+<b class="fc">&nbsp;        String actionText = action.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(actionText, &quot;Action&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the labels are correctly displayed&quot;);</b>
+&nbsp;
+&nbsp;        // Verify all the headers and order
+&nbsp;
+<b class="fc">&nbsp;        WebElement table = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-table&#39;]&quot;));</b>
+<b class="fc">&nbsp;        List&lt;WebElement&gt; tableRows = table.findElements(By.xpath(&quot;.//div[@role=&#39;row&#39; and contains(@class, &#39;rt-tr&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        WebElement tableHeader = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-thead -header&#39;]&quot;));</b>
+<b class="fc">&nbsp;        List&lt;WebElement&gt; headers = tableHeader.findElements(By.xpath(&quot;.//div[@role=&#39;columnheader&#39; and contains(@class, &#39;rt-th&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        List&lt;String&gt; headerTexts = headers.stream().map(WebElement::getText).toList();</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Table Headers: &quot; + headerTexts);</b>
+&nbsp;
+<b class="fc">&nbsp;        TableVerifier.verifyColumnSorting(headers.get(0), tableRows, 1);</b>
+&nbsp;
+<b class="fc">&nbsp;        TableVerifier.verifyColumnSorting(headers.get(1), tableRows, 2);</b>
+&nbsp;
+<b class="fc">&nbsp;        TableVerifier.verifyColumnSorting(headers.get(3), tableRows, 4);</b>
+&nbsp;
+<b class="fc">&nbsp;        TableVerifier.verifyColumnSorting(headers.get(4), tableRows, 5);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the order buttons are working correctly&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement previousbutton = driver.findElement(By.cssSelector(&quot;.-previous&quot;));</b>
+<b class="fc">&nbsp;        String previous = previousbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(previous, &quot;Previous&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement nextbutton = driver.findElement(By.cssSelector(&quot;.-next&quot;));</b>
+<b class="fc">&nbsp;        String next = nextbutton.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(next, &quot;Next&quot;);</b>
+&nbsp;
+&nbsp;        // Verify the edit one row
+&nbsp;
+<b class="fc">&nbsp;        WebElement editButton = driver.findElement(By.id(&quot;edit-record-1&quot;));</b>
+<b class="fc">&nbsp;        editButton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement firstNameInput = driver.findElement(By.id(&quot;firstName&quot;));</b>
+<b class="fc">&nbsp;        WebElement lastNameInput = driver.findElement(By.id(&quot;lastName&quot;));</b>
+<b class="fc">&nbsp;        WebElement emailInput = driver.findElement(By.id(&quot;userEmail&quot;));</b>
+<b class="fc">&nbsp;        WebElement ageInput = driver.findElement(By.id(&quot;age&quot;));</b>
+<b class="fc">&nbsp;        WebElement salaryInput = driver.findElement(By.id(&quot;salary&quot;));</b>
+<b class="fc">&nbsp;        WebElement departmentInput = driver.findElement(By.id(&quot;department&quot;));</b>
+<b class="fc">&nbsp;        WebElement submitButton = driver.findElement(By.id(&quot;submit&quot;));</b>
+&nbsp;
+<b class="fc">&nbsp;        firstNameInput.clear();</b>
+<b class="fc">&nbsp;        firstNameInput.sendKeys(&quot;John&quot;);</b>
+<b class="fc">&nbsp;        lastNameInput.clear();</b>
+<b class="fc">&nbsp;        lastNameInput.sendKeys(&quot;Doe&quot;);</b>
+<b class="fc">&nbsp;        emailInput.clear();</b>
+<b class="fc">&nbsp;        emailInput.sendKeys(&quot;L5kzA@example.com&quot;);</b>
+<b class="fc">&nbsp;        ageInput.clear();</b>
+<b class="fc">&nbsp;        ageInput.sendKeys(&quot;25&quot;);</b>
+<b class="fc">&nbsp;        salaryInput.clear();</b>
+<b class="fc">&nbsp;        salaryInput.sendKeys(&quot;5000&quot;);</b>
+<b class="fc">&nbsp;        departmentInput.clear();</b>
+<b class="fc">&nbsp;        departmentInput.sendKeys(&quot;QA&quot;);</b>
+<b class="fc">&nbsp;        submitButton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        String rowtable = driver.findElement(By.xpath(&quot;(//div[@role=&#39;rowgroup&#39;])[2]&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(rowtable, &quot;John\nDoe\n25\nL5kzA@example.com\n5000\nQA&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Edit button works correctly&quot;);</b>
+&nbsp;
+&nbsp;        // Verify the dropdown option to select the number of rows to display
+&nbsp;
+<b class="fc">&nbsp;        WebElement dropdownElement = driver.findElement(By.cssSelector(&quot;span.select-wrap.-pageSizeOptions &gt; select[aria-label=&#39;rows per page&#39;]&quot;));</b>
+&nbsp;
+<b class="fc">&nbsp;        Select dropdown = new Select(dropdownElement);</b>
+&nbsp;
+<b class="fc">&nbsp;        boolean isMultiple = dropdown.isMultiple();</b>
+<b class="fc">&nbsp;        log.info(&quot;Is the dropdown allowing multiple selection? &quot; + isMultiple);</b>
+&nbsp;
+<b class="fc">&nbsp;        List&lt;WebElement&gt; options = dropdown.getOptions();</b>
+&nbsp;
+<b class="fc">&nbsp;        StringBuilder optionsText = new StringBuilder(&quot;Available options in the dropdown: &quot;);</b>
+<b class="fc">&nbsp;        for (WebElement option : options) {</b>
+<b class="fc">&nbsp;            optionsText.append(option.getText()).append(&quot;, &quot;);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(optionsText.toString());</b>
+<b class="fc">&nbsp;        dropdown.selectByVisibleText(&quot;5 rows&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement selectedOption = dropdown.getFirstSelectedOption();</b>
+<b class="fc">&nbsp;        table = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-tbody&#39;]&quot;));</b>
+<b class="fc">&nbsp;        tableRows = table.findElements(By.xpath(&quot;.//div[@role=&#39;row&#39; and contains(@class, &#39;rt-tr&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        int rowsnumber = tableRows.size();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(rowsnumber, 5);</b>
+<b class="fc">&nbsp;        log.info(&quot;The selected option is: &quot; + selectedOption.getText() + &quot; And the table has: &quot; + rowsnumber + &quot; rows&quot;);</b>
+&nbsp;
+&nbsp;        // Add some rows to the table
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 1; i &lt;= 90; i++) {</b>
+&nbsp;
+<b class="fc">&nbsp;            addbutton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;            firstNameInput = driver.findElement(By.id(&quot;firstName&quot;));</b>
+<b class="fc">&nbsp;            lastNameInput = driver.findElement(By.id(&quot;lastName&quot;));</b>
+<b class="fc">&nbsp;            emailInput = driver.findElement(By.id(&quot;userEmail&quot;));</b>
+<b class="fc">&nbsp;            ageInput = driver.findElement(By.id(&quot;age&quot;));</b>
+<b class="fc">&nbsp;            salaryInput = driver.findElement(By.id(&quot;salary&quot;));</b>
+<b class="fc">&nbsp;            departmentInput = driver.findElement(By.id(&quot;department&quot;));</b>
+<b class="fc">&nbsp;            submitButton = driver.findElement(By.id(&quot;submit&quot;));</b>
+&nbsp;
+<b class="fc">&nbsp;            firstNameInput.sendKeys(&quot;Filipe&quot; + i);</b>
+<b class="fc">&nbsp;            lastNameInput.sendKeys(&quot;Alves&quot; + i);</b>
+<b class="fc">&nbsp;            emailInput.sendKeys(&quot;filipepretoalves&quot; + i + &quot;@gmail.com&quot;);</b>
+<b class="fc">&nbsp;            ageInput.sendKeys(&quot;36&quot;);</b>
+<b class="fc">&nbsp;            salaryInput.sendKeys(&quot;30000&quot;);</b>
+<b class="fc">&nbsp;            departmentInput.sendKeys(&quot;QA Engineer&quot;);</b>
+<b class="fc">&nbsp;            submitButton.click();</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+&nbsp;        // Verify the number of rows in the table
+&nbsp;
+<b class="fc">&nbsp;        dropdown.selectByVisibleText(&quot;100 rows&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        table = driver.findElement(By.xpath(&quot;//div[@class=&#39;rt-tbody&#39;]&quot;));</b>
+<b class="fc">&nbsp;        tableRows = table.findElements(By.xpath(&quot;.//div[@role=&#39;row&#39; and contains(@class, &#39;rt-tr&#39;)]&quot;));</b>
+<b class="fc">&nbsp;        List&lt;WebElement&gt; nonEmptyRows = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (WebElement row : tableRows) {</b>
+<b class="fc">&nbsp;            String rowText = row.getText().trim();</b>
+<b class="fc">&nbsp;            if (!rowText.isEmpty()) {</b>
+<b class="fc">&nbsp;                nonEmptyRows.add(row);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        rowsnumber = nonEmptyRows.size();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(rowsnumber, 93, &quot;The table should have 93 rows, but it has: &quot; + rowsnumber + &quot; rows&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;The table has: &quot; + rowsnumber + &quot; rows. Were added 90 rows successfully.&quot;);</b>
+&nbsp;
+&nbsp;        //Verify the delete button
+&nbsp;
+<b class="fc">&nbsp;        String rowtablePre = driver.findElement(By.xpath(&quot;(//div[@role=&#39;rowgroup&#39;])[1]&quot;)).getText();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement deleteButton = driver.findElement(By.id(&quot;delete-record-3&quot;));</b>
+<b class="fc">&nbsp;        deleteButton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        String rowtablePost = driver.findElement(By.xpath(&quot;(//div[@role=&#39;rowgroup&#39;])[1]&quot;)).getText();</b>
+&nbsp;
+<b class="fc">&nbsp;        Assert.assertNotEquals(rowtablePre, rowtablePost);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Delete button is working correctly. The 1st row was deleted.&quot;);</b>
+&nbsp;
+&nbsp;        // Verify the pagination
+&nbsp;
+<b class="fc">&nbsp;        dropdown.selectByVisibleText(&quot;5 rows&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String pagination = driver.findElement(By.cssSelector(&quot;[aria-label=&#39;jump to page&#39;]&quot;)).getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(pagination, &quot;1&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        nextbutton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        pagination = driver.findElement(By.cssSelector(&quot;[aria-label=&#39;jump to page&#39;]&quot;)).getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(pagination, &quot;2&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        nextbutton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        pagination = driver.findElement(By.cssSelector(&quot;[aria-label=&#39;jump to page&#39;]&quot;)).getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(pagination, &quot;3&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        previousbutton.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        pagination = driver.findElement(By.cssSelector(&quot;[aria-label=&#39;jump to page&#39;]&quot;)).getAttribute(&quot;value&quot;);</b>
+<b class="fc">&nbsp;        Assert.assertEquals(pagination, &quot;2&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;The pagination works as expected after clicking next and previous buttons.&quot;);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test(dependsOnMethods = &quot;webtables&quot;)
+&nbsp;    public void buttons() throws InterruptedException {
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;Starting Buttons Test&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WaitUtility waitUtility = new WaitUtility(driver);</b>
+<b class="fc">&nbsp;        JavascriptExecutor js = (JavascriptExecutor) driver;</b>
+<b class="fc">&nbsp;        Actions actions = new Actions(driver);</b>
+&nbsp;
+&nbsp;        // Click on Buttons button and verify all the elements
+&nbsp;
+<b class="fc">&nbsp;        WebElement buttons = driver.findElement(By.id(&quot;item-4&quot;));</b>
+<b class="fc">&nbsp;        String buttonsText = buttons.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(buttonsText, &quot;Buttons&quot;);</b>
+<b class="fc">&nbsp;        buttons.click();</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement doubleclick = driver.findElement(By.id(&quot;doubleClickBtn&quot;));</b>
+<b class="fc">&nbsp;        String doubleclickText = doubleclick.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(doubleclickText, &quot;Double Click Me&quot;);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        WebElement rightclick = driver.findElement(By.id(&quot;rightClickBtn&quot;));</b>
+<b class="fc">&nbsp;        String rightclickText = rightclick.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(rightclickText, &quot;Right Click Me&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        WebElement click = driver.findElement(By.xpath(&quot;//button[@class=&#39;btn btn-primary&#39; and text()=&#39;Click Me&#39;]\n&quot;));</b>
+<b class="fc">&nbsp;        String clickText = click.getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(clickText, &quot;Click Me&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the buttons are displayed.&quot;);</b>
+&nbsp;
+&nbsp;        // Click on each button and verify the feedback
+&nbsp;
+<b class="fc">&nbsp;        actions.doubleClick(doubleclick).perform();</b>
+<b class="fc">&nbsp;        String doubleclickfeedback = driver.findElement(By.id(&quot;doubleClickMessage&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(doubleclickfeedback, &quot;You have done a double click&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        actions.contextClick(rightclick).perform();</b>
+<b class="fc">&nbsp;        String rightclickfeedback = driver.findElement(By.id(&quot;rightClickMessage&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(rightclickfeedback, &quot;You have done a right click&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        click.click();</b>
+<b class="fc">&nbsp;        String clickfeedback = driver.findElement(By.id(&quot;dynamicClickMessage&quot;)).getText();</b>
+<b class="fc">&nbsp;        Assert.assertEquals(clickfeedback, &quot;You have done a dynamic click&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        log.info(&quot;All the buttons are working correctly.&quot;);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-12 22:05</div>
+</div>
+</body>
+</html>

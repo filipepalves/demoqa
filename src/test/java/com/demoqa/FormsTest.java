@@ -242,9 +242,8 @@ public class FormsTest extends TestUtilities {
         // Type some information on subject
 
         subjecttextbox.click();
-        js.executeScript("arguments[0].value='a';", subjecttextbox);
-
-        Assert.assertTrue(subjecttextbox.getAttribute("value").equals("This autometed test was created by Filipe Alves"));
+        actions.sendKeys(subjecttextbox, "Arts", .click().build().perform();
+        Assert.assertTrue(subjecttextbox.getAttribute("value").equals("Arts"));
 
         log.info("Finishing Practice Forms Test.");
 

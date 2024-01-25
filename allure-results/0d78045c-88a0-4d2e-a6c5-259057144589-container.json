@@ -1,0 +1,1 @@
+{"uuid":"0d78045c-88a0-4d2e-a6c5-259057144589","name":"test.java.com.demoqa.smalltests","children":["659f8f3d-ee6f-4f29-a384-1b385c685fd5"],"befores":[],"afters":[{"name":"tearDown","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1704845283534,"stop":1704845284047}],"start":1704845273128,"stop":1704845284053}
