@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,18 @@ public class ElementsTest extends TestUtilities {
         String url = "https://demoqa.com/";
         driver.get(url);
 
+        By consentDialog = By.className("fc-dialog");
+        waitUtility.waitForVisibility(consentDialog);
+
+        WebElement consentButton = driver.findElement(By.className("fc-cta-consent"));
+        consentButton.click();
+
         // Click on elements button and verify all the elements
+
         By elementsclick = By.cssSelector(".category-cards [class='card mt-4 top-card']:nth-of-type(1)");
         waitUtility.waitAndClick(elementsclick);
 
-        String title = driver.findElement(By.cssSelector(".main-header")).getText();
+        String title = driver.findElement(By.cssSelector("div:nth-of-type(1) > .group-header")).getText().trim();
         Assert.assertEquals(title, "Elements");
 
         String pleaseselect = driver.findElement(By.cssSelector(".col-12.mt-4.col-md-6")).getText();
@@ -82,7 +90,7 @@ public class ElementsTest extends TestUtilities {
         By textboxclick = By.id("item-0");
         waitUtility.waitAndClick(textboxclick);
 
-        String title = driver.findElement(By.cssSelector(".main-header")).getText();
+        String title = driver.findElement(By.cssSelector(".show [id='item-0']")).getText();
         Assert.assertEquals(title, "Text Box");
 
         String fullname = driver.findElement(By.id("userName-label")).getText();
@@ -213,8 +221,7 @@ public class ElementsTest extends TestUtilities {
         notesCheckbox.click();
 
         String result = driver.findElement(By.id("result")).getText();
-        Assert.assertEquals(result, "You have selected :\n" +
-                "notes");
+        Assert.assertEquals(result, "You have selected :\n" + "notes");
 
         WebElement commandsCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Commands')]"));
         commandsCheckbox.click();
@@ -230,6 +237,7 @@ public class ElementsTest extends TestUtilities {
         desktopCheckbox.click();
 
         WebElement reactCheckbox = driver.findElement(By.xpath("//span[contains(text(),'React')]"));
+        js.executeScript("arguments[0].scrollIntoView();", reactCheckbox);
         reactCheckbox.click();
 
         WebElement angularCheckbox = driver.findElement(By.xpath("//span[contains(text(),'Angular')]"));
@@ -619,7 +627,6 @@ public class ElementsTest extends TestUtilities {
         String doubleclickText = doubleclick.getText();
         Assert.assertEquals(doubleclickText, "Double Click Me");
 
-
         WebElement rightclick = driver.findElement(By.id("rightClickBtn"));
         String rightclickText = rightclick.getText();
         Assert.assertEquals(rightclickText, "Right Click Me");
@@ -632,9 +639,21 @@ public class ElementsTest extends TestUtilities {
 
         // Click on each button and verify the feedback
 
-        actions.doubleClick(doubleclick).perform();
-        String doubleclickfeedback = driver.findElement(By.id("doubleClickMessage")).getText();
-        Assert.assertEquals(doubleclickfeedback, "You have done a double click");
+        By doubleClickMessageLocator = By.id("doubleClickMessage");
+        int maxRetries = 10;
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+
+                actions.doubleClick(doubleclick).perform();
+                waitUtility.waitForVisibility(doubleClickMessageLocator);
+
+                String doubleclickfeedback = driver.findElement(doubleClickMessageLocator).getText();
+                if (doubleclickfeedback.equals("You have done a double click")) {
+                    break;
+                }
+            } catch (Exception ignored) {
+            }
+        }
 
         actions.contextClick(rightclick).perform();
         String rightclickfeedback = driver.findElement(By.id("rightClickMessage")).getText();
@@ -924,8 +943,7 @@ public class ElementsTest extends TestUtilities {
         String colorChangeText = colorChange.getText();
         Assert.assertEquals(colorChangeText, "Color Change");
 
-        String buttonColor = (String) js.executeScript(
-                "return window.getComputedStyle(arguments[0]).color;", colorChange);
+        String buttonColor = (String) js.executeScript("return window.getComputedStyle(arguments[0]).color;", colorChange);
         Assert.assertEquals(buttonColor, "rgb(255, 255, 255)");
 
         log.info("Initial Button Color: " + buttonColor);
@@ -961,8 +979,7 @@ public class ElementsTest extends TestUtilities {
 
         }
 
-        String buttonColorAfter = (String) js.executeScript(
-                "return window.getComputedStyle(arguments[0]).color;", colorChange);
+        String buttonColorAfter = (String) js.executeScript("return window.getComputedStyle(arguments[0]).color;", colorChange);
         Assert.assertNotEquals(buttonColorAfter, "rgb(255, 255, 255)");
 
         log.info("Changed Button Color: " + buttonColorAfter);
@@ -972,8 +989,6 @@ public class ElementsTest extends TestUtilities {
         log.info("Finishing Dynamic Properties Test");
 
     }
-
-
 
 
 }

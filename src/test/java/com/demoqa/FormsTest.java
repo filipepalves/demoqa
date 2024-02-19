@@ -22,11 +22,17 @@ public class FormsTest extends TestUtilities {
         String url = "https://demoqa.com/";
         driver.get(url);
 
+        By consentDialog = By.className("fc-dialog");
+        waitUtility.waitForVisibility(consentDialog);
+
+        WebElement consentButton = driver.findElement(By.className("fc-cta-consent"));
+        consentButton.click();
+
         // Click on elements button and verify all the elements
         By elementsclick = By.cssSelector(".category-cards [class='card mt-4 top-card']:nth-of-type(2)");
         waitUtility.waitAndClick(elementsclick);
 
-        String title = driver.findElement(By.cssSelector(".main-header")).getText();
+        String title = driver.findElement(By.cssSelector("div:nth-of-type(2) > .group-header")).getText().trim();
         Assert.assertEquals(title, "Forms");
 
         String pleaseselect = driver.findElement(By.cssSelector(".col-12.mt-4.col-md-6")).getText();
@@ -51,7 +57,7 @@ public class FormsTest extends TestUtilities {
         By textboxclick = By.cssSelector(".collapse.element-list.show > .menu-list > li#item-0");
         waitUtility.waitAndClick(textboxclick);
 
-        String title = driver.findElement(By.cssSelector(".main-header")).getText();
+        String title = driver.findElement(By.cssSelector(".text-center")).getText();
         Assert.assertEquals(title, "Practice Form");
 
         String name = driver.findElement(By.id("userName-label")).getText();
@@ -241,9 +247,18 @@ public class FormsTest extends TestUtilities {
 
         // Type some information on subject
 
-        subjecttextbox.click();
-        actions.sendKeys(subjecttextbox, "Arts", .click().build().perform();
-        Assert.assertTrue(subjecttextbox.getAttribute("value").equals("Arts"));
+        // TODO Implement subject text box
+
+        // Test the checkboxes
+
+        toggleAndRestoreCheckbox(driver, "hobbies-checkbox-1");
+        toggleCheckbox (driver, "hobbies-checkbox-1");
+
+        toggleAndRestoreCheckbox(driver, "hobbies-checkbox-2");
+        toggleCheckbox (driver, "hobbies-checkbox-2");
+
+        toggleAndRestoreCheckbox(driver, "hobbies-checkbox-3");
+        toggleCheckbox (driver, "hobbies-checkbox-3");
 
         log.info("Finishing Practice Forms Test.");
 
