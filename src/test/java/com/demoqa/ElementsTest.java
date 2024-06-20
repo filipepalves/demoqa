@@ -12,6 +12,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static main.java.base.TestUtilities.WaitUtility.clickElement;
+
 public class ElementsTest extends TestUtilities {
 
 
@@ -23,11 +25,11 @@ public class ElementsTest extends TestUtilities {
         String url = "https://demoqa.com/";
         driver.get(url);
 
-        By consentDialog = By.className("fc-dialog");
-        waitUtility.waitForVisibility(consentDialog);
+        //By consentDialog = By.className("fc-dialog");
+        //waitUtility.waitForVisibility(consentDialog);
 
-        WebElement consentButton = driver.findElement(By.className("fc-cta-consent"));
-        consentButton.click();
+        //WebElement consentButton = driver.findElement(By.className("fc-cta-consent"));
+        //consentButton.click();
 
         // Click on elements button and verify all the elements
 
@@ -472,8 +474,9 @@ public class ElementsTest extends TestUtilities {
 
         // Verify the edit one row
 
+        js.executeScript("window.scrollBy(0, 250);");
         WebElement editButton = driver.findElement(By.id("edit-record-1"));
-        editButton.click();
+        clickElement(By.id("edit-record-1"));
 
         WebElement firstNameInput = driver.findElement(By.id("firstName"));
         WebElement lastNameInput = driver.findElement(By.id("lastName"));
@@ -631,13 +634,15 @@ public class ElementsTest extends TestUtilities {
         String rightclickText = rightclick.getText();
         Assert.assertEquals(rightclickText, "Right Click Me");
 
-        WebElement click = driver.findElement(By.xpath("//button[@class='btn btn-primary' and text()='Click Me']\n"));
+        WebElement click = driver.findElement(By.xpath("//button[@class='btn btn-primary' and text()='Click Me']"));
         String clickText = click.getText();
         Assert.assertEquals(clickText, "Click Me");
 
         log.info("All the buttons are displayed.");
 
         // Click on each button and verify the feedback
+
+        js.executeScript("window.scrollBy(0, 250);");
 
         By doubleClickMessageLocator = By.id("doubleClickMessage");
         int maxRetries = 10;
@@ -658,6 +663,8 @@ public class ElementsTest extends TestUtilities {
         actions.contextClick(rightclick).perform();
         String rightclickfeedback = driver.findElement(By.id("rightClickMessage")).getText();
         Assert.assertEquals(rightclickfeedback, "You have done a right click");
+
+        js.executeScript("window.scrollBy(0, 250);");
 
         click.click();
         String clickfeedback = driver.findElement(By.id("dynamicClickMessage")).getText();
@@ -682,8 +689,8 @@ public class ElementsTest extends TestUtilities {
         Assert.assertEquals(linksText, "Links");
         links.click();
 
-        WebElement simplelink = driver.findElement(By.id("simpleLink"));
-        String simplelinkText = simplelink.getText();
+        By simplelink = By.id("simpleLink");
+        String simplelinkText = driver.findElement(simplelink).getText();
         Assert.assertEquals(simplelinkText, "Home");
 
         WebElement dynamiclink = driver.findElement(By.id("dynamicLink"));
@@ -722,7 +729,7 @@ public class ElementsTest extends TestUtilities {
 
         // Click on Home link
 
-        simplelink.click();
+        clickElement(simplelink);
 
         tabSwitcher.switchToNewTabAndAssertURL("https://demoqa.com/");
 
